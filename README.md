@@ -1,7 +1,20 @@
-dtu_mlops_finalproject
+MLOps project description: insert when chosen
 ==============================
 
-MLOps final project
+### Overall goal of the project
+The goal of the project is to..
+
+### What framework are you going to use (Kornia, Transformer, Pytorch-Geometrics)
+..
+
+### How to you intend to include the framework into your project
+We plan on...
+
+### What data are you going to run on (initially, may change)
+
+### What deep learning models do you expect to use
+...
+
 
 Project Organization
 ------------
