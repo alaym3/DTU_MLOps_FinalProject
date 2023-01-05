@@ -15,6 +15,9 @@ We plan on...
 ### What deep learning models do you expect to use
 ...
 
+## Checklist
+[View our checklist](CHECKLIST.md)
+
 
 Project Organization
 ------------
