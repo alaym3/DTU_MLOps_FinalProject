@@ -7,7 +7,7 @@ point on the checklist for the exam.
 
 * [X] Create a git repository
 * [X] Make sure that all team members have write access to the github repository
-* [ ] Create a dedicated environment for you project to keep track of your packages (using conda) - Alaina will do once everyone pushes initial code to main
+* [ ] Create a dedicated environment for you project to keep track of your packages (using conda) - Alaina
 * [X] Create the initial file structure using cookiecutter
 * [X] Fill out the `make_dataset.py` file such that it downloads whatever data you need and - Siddhi
 * [X] Fill out the `make_dataset.py` file such that it downloads whatever data you need and - Siddhi
