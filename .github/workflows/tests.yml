@@ -58,10 +58,10 @@ jobs:
         pip install isort
         isort .
 
-    - name: Update formatting with black
-      run: |
-        pip install black
-        black .
+    # - name: Update formatting with black
+    #   run: |
+    #     pip install black
+    #     black .
 
     # - name: pep8 compliance with flake8
     #   run: |
