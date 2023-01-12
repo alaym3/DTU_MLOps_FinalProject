@@ -1,3 +1,12 @@
-click==8.0.4
+# local package
+-e .
+
+# external requirements
+click
+Sphinx
+coverage
+awscli==1.27.38
+flake8
 python-dotenv==0.21.0
 setuptools==65.6.3
+
