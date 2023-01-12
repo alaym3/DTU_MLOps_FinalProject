@@ -1,10 +1,12 @@
 # local package
 -e .
 
+# external requirements
 click==8.0.4
 datasets==2.8.0
-Markdown==3.3.4
+Markdown==3.4.1
 python-dotenv==0.21.0
-setuptools==65.6.3
-torch==1.13.1
-torchvision==0.14.1
+setuptools==45.2.0
+torch
+torchvision
+transformers
