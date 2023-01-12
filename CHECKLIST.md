@@ -7,12 +7,12 @@ point on the checklist for the exam.
 
 * [X] Create a git repository
 * [X] Make sure that all team members have write access to the github repository
-* [ ] Create a dedicated environment for you project to keep track of your packages (using conda)
+* [ ] Create a dedicated environment for you project to keep track of your packages (using conda) - Alaina will do once everyone pushes initial code to main
 * [X] Create the initial file structure using cookiecutter
 * [ ] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
 * [ ] Add a model file and a training script and get that running
 * [ ] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
-* [ ] Remember to comply with good coding practices (`pep8`) while doing the project
+* [X] Remember to comply with good coding practices (`pep8`) while doing the project - Alaina added black and isort to tests.yml
 * [ ] Do a bit of code typing and remember to document essential parts of your code
 * [ ] Setup version control for your data or part of your data
 * [ ] Construct one or multiple docker files for your code
