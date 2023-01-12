@@ -38,6 +38,14 @@ clean:
 lint:
 	flake8 src
 
+## Run training
+train:
+	$(PYTHON_INTERPRETER) src/models/train_model.py
+
+## Run evaluation
+evaluate:
+	$(PYTHON_INTERPRETER) src/models/predict_model.py
+
 ## Upload Data to S3
 sync_data_to_s3:
 ifeq (default,$(PROFILE))
