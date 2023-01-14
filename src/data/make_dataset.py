@@ -31,7 +31,7 @@ def main(input_filepath, output_filepath):
 
     #Downloading raw data from huggingface
     dataset_name = "rotten_tomatoes"
-    train = load_dataset(dataset_name, split="test")
+    train = load_dataset(dataset_name, split="train")
     test = load_dataset(dataset_name, split="test")
     validation = load_dataset(dataset_name, split="validation")
 
