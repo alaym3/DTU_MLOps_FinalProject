@@ -10,6 +10,7 @@ from transformers import AutoModelForSequenceClassification, Trainer, TrainingAr
 import numpy as np
 from datasets import load_metric
 from datasets import load_from_disk
+import sklearn
 
 # turn off wandb so that this can run in docker
 import os
@@ -58,5 +59,9 @@ trainer = Trainer(
     data_collator=data_collator,
     compute_metrics=compute_metrics,
 )
-trainer.train()
+
+trainer.train() # only uncomment if you want to re-train the model
 trainer.evaluate()
+
+# Save the model
+trainer.save_model("models/")
