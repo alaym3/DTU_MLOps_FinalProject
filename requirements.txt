@@ -10,3 +10,4 @@ setuptools==45.2.0
 torch
 torchvision
 transformers
+wandb
