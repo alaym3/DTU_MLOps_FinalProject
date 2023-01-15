@@ -11,6 +11,10 @@ import numpy as np
 from datasets import load_metric
 from datasets import load_from_disk
 
+# turn off wandb so that this can run in docker
+import os
+os.environ["WANDB_DISABLED"] = "true"
+
 # Load train and validation sets
 train_dataset = load_from_disk("data/processed/tokenized_train")
 val_dataset = load_from_disk("data/processed/tokenized_validation")
@@ -42,7 +46,8 @@ training_args = TrainingArguments(
     per_device_eval_batch_size=16,
     num_train_epochs=2,
     weight_decay=0.01,
-    save_strategy="epoch"
+    save_strategy="epoch",
+    report_to=None
 )
 trainer = Trainer(
     model=model,

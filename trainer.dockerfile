@@ -11,12 +11,15 @@ COPY requirements.txt requirements.txt
 COPY setup.py setup.py
 COPY src/ src/
 COPY data/ data/
-# COPY models/ models/
-# COPY reports/ reports/
+COPY models/ models/
+COPY reports/ reports/
 
 # set working directory and install dependencies
 WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
 
-# set predict to be the entry point
-ENTRYPOINT ["python", "-u", "src/data/make_dataset.py"]
+# run make data
+# RUN make data
+
+# set training to be the entry point
+ENTRYPOINT ["python", "-u", "src/models/train_model.py"]
