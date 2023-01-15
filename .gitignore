@@ -8,6 +8,7 @@ __pycache__/
 models/
 data/raw/
 data/processed/
+wandb/
 
 # C extensions
 *.so
