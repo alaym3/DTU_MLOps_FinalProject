@@ -1,13 +1,14 @@
 # local package
 -e .
 
-# external requirements
 click==8.0.4
 datasets==2.8.0
 Markdown==3.4.1
+numpy==1.22.3
+pytest==7.2.0
 python-dotenv==0.21.0
+scikit_learn==1.2.0
 setuptools==45.2.0
-torch
-torchvision
-transformers
-wandb
+torch==1.13.1
+torchvision==0.14.1
+transformers==4.25.1
