@@ -4,15 +4,28 @@
 4. run gcloud ai custom-jobs create (as in 3b)
 
 <!-- Steps in order -->
-docker build --platform linux/amd64 -f trainer.dockerfile . -t trainerc:latest
-docker tag trainerc gcr.io/final-project-374512/trainerc
-docker push gcr.io/final-project-374512/trainerc
+docker build --platform linux/amd64 -f trainer.dockerfile . -t trainerd:latest
+docker tag trainerd gcr.io/final-project-374512/trainerd
+docker push gcr.io/final-project-374512/trainerd
 
 gcloud ai custom-jobs create \
    --region=europe-west1 \
-   --display-name=test-run-c \
-   --config=config.yaml
+   --display-name=test-run-d-gpu \
+   --config=config_gpu.yaml
 
 <!-- try copying src ./src -->
 
 <!-- docker build --platform linux/amd64  . -->
+
+
+
+gpu:
+# config_gpu.yaml
+workerPoolSpecs:
+   machineSpec:
+      machineType: n1-standard-8
+      acceleratorType: NVIDIA_TESLA_T4
+      acceleratorCount: 1
+   replicaCount: 1
+   containerSpec:
+      imageUri: gcr.io/<project-id>/<docker-img>
