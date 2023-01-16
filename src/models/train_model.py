@@ -20,7 +20,7 @@ import sklearn
     
 
 
-# turn off wandb so that this can run in docker
+# Turn off wandb so that this can run in docker
 import os
 os.environ["WANDB_DISABLED"] = "true"
 
@@ -30,6 +30,11 @@ val_dataset = load_from_disk("data/processed/tokenized_validation")
 
 # Define the evaluation metrics
 def compute_metrics(eval_pred):
+    '''Defines the evaluation metrics.
+           Parameters:
+               eval_pred
+       Returns a dictionary string to metric values.
+    '''
     load_accuracy = load_metric("accuracy")
     load_f1 = load_metric("f1")
     logits, labels = eval_pred
@@ -50,25 +55,29 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
 training_args = TrainingArguments(
-    output_dir="models/",
-    learning_rate=2e-5,
-    per_device_train_batch_size=16,
-    per_device_eval_batch_size=16,
-    num_train_epochs=2,
-    weight_decay=0.01,
-    save_strategy="epoch")
+    output_dir="models/",                   # output directory where model predictions and checkpoints will be written
+    learning_rate=2e-5,                     # learning rate (float)
+    per_device_train_batch_size=16,         # batch size per GPU/TPU core/CPU for training
+    per_device_eval_batch_size=16,          # batch size per GPU/TPU core/CPU for evaluation
+    num_train_epochs=2,                     # total number of training epochs to perform
+    weight_decay=0.01,                      # weight decay to apply (if not zero) to all layers except all bias and LayerNorm weights
+    save_strategy="epoch")                  # checkpoint save strategy to adopt during training
+
 trainer = Trainer(
-    model=model,
-    args=training_args,
-    train_dataset=train_dataset,
-    eval_dataset=val_dataset,
-    tokenizer=tokenizer,
-    data_collator=data_collator,
-    compute_metrics=compute_metrics,
+    model=model,                            # the instantiated 🤗 Transformers model to be trained
+    args=training_args,                     # training arguments, defined above
+    train_dataset=train_dataset,            # training dataset
+    eval_dataset=val_dataset,               # evaluation dataset
+    tokenizer=tokenizer,                    # tokenizer, defined above
+    data_collator=data_collator,            # function to use to form a batch from a list of elements of train_dataset or eval_dataset
+    compute_metrics=compute_metrics,        # function that will be used to compute metrics at evaluation
 )
 
+# Train the model
 trainer.train() # only uncomment if you want to re-train the model
+
+# Evaluation of model
 trainer.evaluate()
 
-# Save the model
+# Save the model into models/
 trainer.save_model("models/")
