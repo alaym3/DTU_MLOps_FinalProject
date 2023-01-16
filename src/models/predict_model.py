@@ -15,4 +15,14 @@ labels = torch.tensor([1]).unsqueeze(0)  # Batch size 1
 outputs = model(**inputs, labels=labels)
 predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
 predictions = predictions.cpu().detach().numpy()
+
+# store the positive and negative predictions
+neg_prediction = predictions[0][0]*100
+pos_prediction = predictions[0][1]*100
+
+# print results
 print('Predictions for the phrase "' + text + '" : ', predictions)
+print(f'Probability of the phrase being negative: {neg_prediction}%')
+print(f'Probability of the phrase being positive: {pos_prediction}%')
+
+
