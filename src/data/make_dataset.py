@@ -10,12 +10,15 @@ import os
 from transformers import AutoTokenizer
 
 def get_tokenizer():
+    '''Defines the tokenizer.
+    '''
     tokenizer_type = "bert-base-uncased"
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_type, use_fast=False)
     return tokenizer
 
-# Prepare the text inputs for the model
 def preprocess_function(examples):
+    '''Prepares the text inputs for the model.
+    '''
     tokenizer = get_tokenizer()
     return tokenizer(examples["text"], truncation=True)
 
@@ -25,27 +28,30 @@ def preprocess_function(examples):
 def main(input_filepath, output_filepath):
     """Runs data processing scripts to turn raw data from (../raw) into
     cleaned data ready to be analyzed (saved in ../processed).
+       Parameters:
+           input_filepath (str): by default data/raw/
+           output_filepath (str): by default data/processed/
     """
     logger = logging.getLogger(__name__)
     logger.info("making final data set from raw data")
 
-    #Downloading raw data from huggingface
+    # Downloading raw data from huggingface
     dataset_name = "rotten_tomatoes"
     train = load_dataset(dataset_name, split="train")
     test = load_dataset(dataset_name, split="test")
     validation = load_dataset(dataset_name, split="validation")
 
-    #Saving raw data to data/raw/
+    # Saving raw data to data/raw/
     train.save_to_disk(os.path.join(input_filepath, "train"))
     test.save_to_disk(os.path.join(input_filepath, "test"))
     validation.save_to_disk(os.path.join(input_filepath, "validation"))
     
-    # #Tokenizing raw data
+    # Tokenizing raw data
     tokenized_train = train.map(preprocess_function, batched=True)
     tokenized_test = test.map(preprocess_function, batched=True)
     tokenized_validation = validation.map(preprocess_function, batched=True)
 
-    #Saving tokenized data to data/processed/
+    # Saving tokenized data to data/processed/
     tokenized_train.save_to_disk(os.path.join(output_filepath, "tokenized_train"))
     tokenized_test.save_to_disk(os.path.join(output_filepath, "tokenized_test"))
     tokenized_validation.save_to_disk(os.path.join(output_filepath, "tokenized_validation"))

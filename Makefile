@@ -42,8 +42,8 @@ lint:
 train:
 	$(PYTHON_INTERPRETER) src/models/train_model.py
 
-## Run evaluation
-evaluate:
+## Run predict
+predict:
 	$(PYTHON_INTERPRETER) src/models/predict_model.py
 
 ## Upload Data to S3
