@@ -118,7 +118,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 6 fill here ---
+--- We have used flake8, black and isort as tools for styling our code. We have used flake8 to check if our code is pep8 compliant. Then, black to reformat the code automatically to pep8 compliant, instead of fixing our own errors manually. Lastly, we have used the library isort to sort imports alphabetically and automatically separated into sections and by type. These tools are convenient for larger projects since it is good practice that all people working together in the same project have the same format and style. ---
 
 ## Version control
 
@@ -212,7 +212,18 @@ In any case, not all the parts of the source code were checked, as there are man
 >
 > Answer:
 
---- question 12 fill here ---
+--- How did you configure experiments? Did you make use of config files? Explain with coding examples of how you would run a experiment.
+Answer length: 50-100 words.
+We decided that an argument parser was not needed if we implemented Hydra. Therefore, we created a model_config.yaml file that allowed us to change the chosen hyperparameters of the model training. We were interested in testing different kinds of models (bert-base-uncased and distilbert-base-uncased) and different batch sizes, learning rates, weight decays and training epochs.
+Inside the model script (train_model_hydra.py), we created a function in which we passed the hyperparameters in this way:
+
+@hydra.main(config_path="config", config_name="model_config.yaml")
+def main(cfg):
+model_name = cfg.model
+model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
+
+To run the model with non-default hyperparameters we would run:
+python train_model_hydra.py model="bert-base-uncased" ---
 
 ### Question 13
 
@@ -227,7 +238,8 @@ In any case, not all the parts of the source code were checked, as there are man
 >
 > Answer:
 
---- question 13 fill here ---
+--- The advantage of using Hydra is that the hyperparameters get recorded with the model output, so we do not have to record them manually ourselves. The outputs are written into an outputs folder with every training in a subfolder with subsubfolders for the models outputs and the config.yaml files, where the hyperparamers stablished in the command line when running the code are kept. To reproduce an experiment, one would have to look at these config.yaml lines and run the model with the same hyperparameters.
+As well, the entire reproducibility of our experiments is not guaranteed if we do not indicate other requisites such as the operating system or other software dependencies, which might be crucial to get the same results. For this, we created several Docker files, which span the main 3 activities that our code does: creating the processed data by tokenizing the RottenTomatoes dataset (makedataset.dockerfile), training the model (trainer.dockerfile) and make predictions for new texts (predict.dockerfile). ---
 
 ### Question 14
 
