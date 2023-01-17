@@ -11,14 +11,14 @@ import numpy as np
 from datasets import load_metric
 from datasets import load_from_disk
 import hydra
-​
+
 @hydra.main(config_path="config", config_name="model_config.yaml")
 def main(cfg):
     # Load train and validation sets
     dataset_path = os.path.join(hydra.utils.get_original_cwd(), 'data\processed')
     train_dataset = load_from_disk(os.path.join(dataset_path, "tokenized_train"))
     val_dataset = load_from_disk(os.path.join(dataset_path,"tokenized_validation"))
-​
+
     # Define the evaluation metrics
     def compute_metrics(eval_pred):
         load_accuracy = load_metric("accuracy")
@@ -28,17 +28,17 @@ def main(cfg):
         accuracy = load_accuracy.compute(predictions=predictions, references=labels)["accuracy"]
         f1 = load_f1.compute(predictions=predictions, references=labels)["f1"]
         return {"accuracy": accuracy, "f1": f1}
-​
+
     # Load BERT-base-uncased model
     model_name = cfg.model # "distilbert-base-uncased" # "bert-base-uncased"
     model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
-​
+
     # Set DistilBERT tokenizer
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-​
+
     # Use data_collector to convert our samples to PyTorch tensors and concatenate them with the correct amount of padding
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
-​
+
     training_args = TrainingArguments(
         output_dir="models/",
         learning_rate=cfg.lr, # 2e-5,
@@ -60,10 +60,9 @@ def main(cfg):
     )
     trainer.train()
     trainer.evaluate()
-​
+
     # Save the model
-    trainer.save_model("models/")
-​
-​
+    trainer.save_model("models")
+
 if __name__ == "__main__":
     main()
