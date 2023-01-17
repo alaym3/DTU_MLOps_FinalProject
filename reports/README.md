@@ -49,7 +49,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 1 fill here ---
+--- 20 ---
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -60,7 +60,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 2 fill here ---
+--- s222712, s222701, s212937, s213252 ---
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -73,7 +73,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 3 fill here ---
+--- We decided to use the Transformer framework from the Huggingface group. In particular for our Natural Language Processing project, we used the pre-trained model "distilbert-base-uncased" and fine-tuned it on the task of sequence classification (where we want to classify in "positive" or "negative" the sequence of tokens). Some of the functionalities that we have used are the "tokenizer" functionality to prepare the inputs for our model, the functionality "data collator with padding" to convert our samples to PyTorch tensors and concatenate them with the correct amount of padding and the "TrainingArguments" and "Trainer" to define the training parameters. The transformer framework has helped us because, thanks to the pre-trained model, we have had the opportunity to have a very solid starting point for the development of our project. ---
 
 ## Coding environment
 
@@ -107,7 +107,7 @@ be installed with `pip install click markdown`.
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+--- We created the cookiecutter template and filled in the folders and scripts as needed. These were mainly the src/models/ and src/data/ for coding the model, but we have of course also put our files in the data/ folder (although without interim or external data), our unittests in the tests/ folder and the model outputs in the models/ folder. We also have kept the makefile, the readme file, the requirements file and the setup file, as they are essential parts of a repository. On the other hand, we have removed the notebooks/ and references/ folders since we do not have other materials for exploration or explanations, and some others within the main folders, such as src/visualization/, src/features/ and the aforementioned data/interim and data/external, since we did not work with any of these aspects in our project. Besides the cookiecutter structure, we have added a folder for dvc (.dvc/) and others for configuration files (.config/ and src/models/config/). ---
 
 ### Question 6
 
@@ -118,7 +118,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 6 fill here ---
+--- We have used flake8, black and isort as tools for styling our code. We have used flake8 to check if our code is pep8 compliant. Then, black to reformat the code automatically to pep8 compliant, instead of fixing our own errors manually. Lastly, we have used the library isort to sort imports alphabetically and automatically separated into sections and by type. These tools are convenient for larger projects since it is good practice that all people working together in the same project have the same format and style. ---
 
 ## Version control
 
@@ -131,7 +131,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 7 fill here ---
+--- We have implemented a total of 8 tests. 3 of these tested that the lengths of the train, test and validation raw subsets were appropriate and also that we were correctly identifying each subset as such. Other 3 test also tested the sizes of the tokenized texts (processed data). This was critical to ensure the correct tokenization of the texts. Lastly, 2 more tests were done to the model, to check that it was working correctly. We tested the size of the output (to match the number of classes) and that the predictions were probabilities between 0 and 1. ---
 
 ### Question 8
 
@@ -146,7 +146,8 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 8 fill here ---
+--- The coverage of the code is 98%, which tests the source code of making the dataset and of training the model. The coverage of the datasets is of 100%, but that of the model is 96%. There was a skipped line in test_model.py (line 17), which belongs to the content of an if statement that is never applied, which is the reason why the percentage is not 100%.
+In any case, not all the parts of the source code were checked, as there are many aspects that could be tested and more tests can always be done. As well, it is likely that the tests themselves are biased because we created them after looking at the outputs the model produces. ---
 
 ### Question 9
 
@@ -161,7 +162,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 9 fill here ---
+--- Our team has been using branches and pull requests. During our workflow each of the team members have been creating their own branches with their own committed changes. When a member of the group pushed to her branch new working files, the whole team was notified and a pull request was created. Then, another member of the group would review the pull request and merge to the main branch, where we have always kept the newest (working) version of our project. When we wanted to make new changes to the newest version, we would pull the main repository to our local repository, create a new branch or rebase an existing one to overwrite the last version the project. ---
 
 ### Question 10
 
@@ -211,7 +212,18 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 12 fill here ---
+--- How did you configure experiments? Did you make use of config files? Explain with coding examples of how you would run a experiment.
+Answer length: 50-100 words.
+We decided that an argument parser was not needed if we implemented Hydra. Therefore, we created a model_config.yaml file that allowed us to change the chosen hyperparameters of the model training. We were interested in testing different kinds of models (bert-base-uncased and distilbert-base-uncased) and different batch sizes, learning rates, weight decays and training epochs.
+Inside the model script (train_model_hydra.py), we created a function in which we passed the hyperparameters in this way:
+
+@hydra.main(config_path="config", config_name="model_config.yaml")
+def main(cfg):
+model_name = cfg.model
+model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
+
+To run the model with non-default hyperparameters we would run:
+python train_model_hydra.py model="bert-base-uncased" ---
 
 ### Question 13
 
@@ -226,7 +238,8 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 13 fill here ---
+--- The advantage of using Hydra is that the hyperparameters get recorded with the model output, so we do not have to record them manually ourselves. The outputs are written into an outputs folder with every training in a subfolder with subsubfolders for the models outputs and the config.yaml files, where the hyperparamers stablished in the command line when running the code are kept. To reproduce an experiment, one would have to look at these config.yaml lines and run the model with the same hyperparameters.
+As well, the entire reproducibility of our experiments is not guaranteed if we do not indicate other requisites such as the operating system or other software dependencies, which might be crucial to get the same results. For this, we created several Docker files, which span the main 3 activities that our code does: creating the processed data by tokenizing the RottenTomatoes dataset (makedataset.dockerfile), training the model (trainer.dockerfile) and make predictions for new texts (predict.dockerfile). ---
 
 ### Question 14
 
