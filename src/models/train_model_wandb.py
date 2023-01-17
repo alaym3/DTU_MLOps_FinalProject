@@ -1,16 +1,20 @@
-import os
-from torch.utils.data import Dataset, DataLoader
-import torch
 import argparse
+import os
 import sys
+
 import click
-import torch
-from torch import nn, optim
-from transformers import AutoModelForSequenceClassification, Trainer, TrainingArguments, AutoTokenizer, DataCollatorWithPadding, AutoModel, DistilBertForSequenceClassification
 import numpy as np
-from datasets import load_metric
-from datasets import load_from_disk
+import torch
+from datasets import load_from_disk, load_metric
+from torch import nn, optim
+from torch.utils.data import DataLoader, Dataset
+from transformers import (AutoModel, AutoModelForSequenceClassification,
+                          AutoTokenizer, DataCollatorWithPadding,
+                          DistilBertForSequenceClassification, Trainer,
+                          TrainingArguments)
+
 import wandb
+
 wandb.login()
 wandb.init(
     # set the wandb project where this run will be logged
