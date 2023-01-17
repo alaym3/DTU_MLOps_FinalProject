@@ -1,3 +1,4 @@
+from typing import Any
 import argparse
 import os
 import sys
@@ -21,7 +22,7 @@ wandb.init(
     project="rotten_tomatoes")
 
 @hydra.main(config_path="../../config", config_name="model_config.yaml")
-def main(cfg):
+def main(cfg: Any):
     # Load train and validation sets
     dataset_path = os.path.join(hydra.utils.get_original_cwd(), 'data/processed/')
     train_dataset = load_from_disk(os.path.join(dataset_path, "tokenized_train"))
@@ -45,7 +46,7 @@ def main(cfg):
 
     accuracy_metric = load_metric("accuracy")
 
-    def compute_metrics(eval_pred):
+    def compute_metrics(eval_pred: Any) -> Any:
         predictions, labels = eval_pred
         predictions = np.argmax(predictions, axis=1)
 
@@ -59,7 +60,12 @@ def main(cfg):
         # metrics from the datasets library have a compute method
         return accuracy_metric.compute(predictions=predictions, references=labels)
 
-    # def compute_metrics(eval_pred):
+    # def compute_metrics(eval_pred: Any) -> dict[str,float]:
+    #     '''Defines the evaluation metrics.
+    #         Parameters:
+    #                eval_pred (class): 'transformers.trainer_utils.EvalPrediction'
+    #         Returns a dictionary string to metric values.
+    #     '''
     #     load_accuracy = load_metric("accuracy")
     #     load_f1 = load_metric("f1")
     #     logits, labels = eval_pred
@@ -91,31 +97,35 @@ def main(cfg):
     #     report_to="wandb")
 
     training_args = TrainingArguments(
-        report_to='wandb',                    # enable logging to W&B
-        output_dir="models/",                 # set output directory
+        report_to='wandb',                                      # enable logging to W&B
+        output_dir="models/",                                   # set output directory
         overwrite_output_dir=True,
-        evaluation_strategy='steps',          # check evaluation metrics on a given # of steps
-        learning_rate=cfg.lr,                   # we can customize learning rate
+        evaluation_strategy='steps',                            # check evaluation metrics on a given # of steps
+        learning_rate=cfg.lr,                                   # we can customize learning rate
         max_steps=cfg.max_steps,
-        logging_steps=cfg.logging_steps,                    # we will log every 100 steps
-        eval_steps=cfg.eval_steps,                       # we will perform evaluation every 1000 steps
-        eval_accumulation_steps=cfg.eval_accumulation_steps,            # report evaluation results after each step
+        logging_steps=cfg.logging_steps,                        # we will log every 100 steps
+        eval_steps=cfg.eval_steps,                              # we will perform evaluation every 1000 steps
+        eval_accumulation_steps=cfg.eval_accumulation_steps,    # report evaluation results after each step
         load_best_model_at_end=cfg.load_best_model_at_end,
         metric_for_best_model='accuracy',
-        run_name='my_training_run'            # name of the W&B run
+        run_name='my_training_run'                              # name of the W&B run
     )
 
 
     trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=train_dataset, 
-        eval_dataset=val_dataset,
-        tokenizer=tokenizer,
-        data_collator=data_collator,
-        compute_metrics=compute_metrics,
+        model=model,                            # the instantiated 🤗 Transformers model to be trained
+        args=training_args,                     # training arguments, defined above
+        train_dataset=train_dataset,            # training dataset
+        eval_dataset=val_dataset,               # evaluation dataset
+        tokenizer=tokenizer,                    # tokenizer, defined above
+        data_collator=data_collator,            # function to use to form a batch from a list of elements of train_dataset or eval_dataset
+        compute_metrics=compute_metrics,        # function that will be used to compute metrics at evaluation
     )
+
+    # Train the model
     trainer.train()
+
+    # Evaluation of model
     trainer.evaluate()
 
 if __name__ == "__main__":
