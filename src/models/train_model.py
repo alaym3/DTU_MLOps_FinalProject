@@ -1,4 +1,5 @@
 import argparse
+# Turn off wandb so that this can run in docker
 # turn off wandb so that this can run in docker
 import os
 import sys
@@ -23,8 +24,6 @@ from transformers import (AutoModel, AutoModelForSequenceClassification,
     
 
 
-# Turn off wandb so that this can run in docker
-import os
 
 # os.environ["WANDB_DISABLED"] = "true"
 

@@ -4,10 +4,8 @@ import os
 from pathlib import Path
 
 import click
-import torch
-from datasets import load_dataset, load_from_disk
+from datasets import load_dataset
 from dotenv import find_dotenv, load_dotenv
-from torchvision import transforms
 from transformers import AutoTokenizer
 
 
