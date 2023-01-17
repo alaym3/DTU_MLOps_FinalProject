@@ -1,16 +1,19 @@
-import os
-from torch.utils.data import Dataset, DataLoader
-import torch
 import argparse
+# turn off wandb so that this can run in docker
+import os
 import sys
+
 import click
-import torch
-from torch import nn, optim
-from transformers import AutoModelForSequenceClassification, Trainer, TrainingArguments, AutoTokenizer, DataCollatorWithPadding, AutoModel, DistilBertForSequenceClassification
 import numpy as np
-from datasets import load_metric
-from datasets import load_from_disk
 import sklearn
+import torch
+from datasets import load_from_disk, load_metric
+from torch import nn, optim
+from torch.utils.data import DataLoader, Dataset
+from transformers import (AutoModel, AutoModelForSequenceClassification,
+                          AutoTokenizer, DataCollatorWithPadding,
+                          DistilBertForSequenceClassification, Trainer,
+                          TrainingArguments)
 
 # import wandb
 # wandb.login()
@@ -19,9 +22,11 @@ import sklearn
 #     project="rotten_tomatoes")
     
 
+
 # Turn off wandb so that this can run in docker
 import os
-os.environ["WANDB_DISABLED"] = "true"
+
+# os.environ["WANDB_DISABLED"] = "true"
 
 # Load train and validation sets
 train_dataset = load_from_disk("data/processed/tokenized_train")
@@ -54,26 +59,26 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
 training_args = TrainingArguments(
-    output_dir="models/",               # output directory where model predictions and checkpoints will be written
-    learning_rate=2e-5,                 # learning rate (float)
-    per_device_train_batch_size=16,     # batch size per GPU/TPU core/CPU for training
-    per_device_eval_batch_size=16,      # batch size per GPU/TPU core/CPU for evaluation
-    num_train_epochs=2,                 # total number of training epochs to perform
-    weight_decay=0.01,                  # weight decay to apply (if not zero) to all layers except all bias and LayerNorm weights                
-    save_strategy="epoch")              # checkpoint save strategy to adopt during training
+    output_dir="models/",                   # output directory where model predictions and checkpoints will be written
+    learning_rate=2e-5,                     # learning rate (float)
+    per_device_train_batch_size=16,         # batch size per GPU/TPU core/CPU for training
+    per_device_eval_batch_size=16,          # batch size per GPU/TPU core/CPU for evaluation
+    num_train_epochs=2,                     # total number of training epochs to perform
+    weight_decay=0.01,                      # weight decay to apply (if not zero) to all layers except all bias and LayerNorm weights
+    save_strategy="epoch")                  # checkpoint save strategy to adopt during training
 
 trainer = Trainer(
-    model=model,                        # the instantiated 🤗 Transformers model to be trained
-    args=training_args,                 # training arguments, defined above
-    train_dataset=train_dataset,        # training dataset
-    eval_dataset=val_dataset,           # evaluation dataset
-    tokenizer=tokenizer,                # tokenizer, defined above
-    data_collator=data_collator,        # function to use to form a batch from a list of elements of train_dataset or eval_dataset
-    compute_metrics=compute_metrics,    # function that will be used to compute metrics at evaluation
+    model=model,                            # the instantiated 🤗 Transformers model to be trained
+    args=training_args,                     # training arguments, defined above
+    train_dataset=train_dataset,            # training dataset
+    eval_dataset=val_dataset,               # evaluation dataset
+    tokenizer=tokenizer,                    # tokenizer, defined above
+    data_collator=data_collator,            # function to use to form a batch from a list of elements of train_dataset or eval_dataset
+    compute_metrics=compute_metrics,        # function that will be used to compute metrics at evaluation
 )
 
 # Train the model
-#trainer.train() # only uncomment if you want to re-train the model
+trainer.train() # only uncomment if you want to re-train the model
 
 # Evaluation of model
 trainer.evaluate()
