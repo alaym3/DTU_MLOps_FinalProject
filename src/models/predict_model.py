@@ -1,6 +1,6 @@
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
-from datasets import load_from_disk
 import torch
+from datasets import load_from_disk
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 test_dataset = load_from_disk("data/processed/tokenized_test")
 
