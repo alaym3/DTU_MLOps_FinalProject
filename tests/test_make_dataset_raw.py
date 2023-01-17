@@ -1,12 +1,14 @@
 from datasets import load_from_disk
 
+
 def load_raw_data():
     # Load train and validation sets
     training = load_from_disk("data/raw/train")
     testing = load_from_disk("data/raw/test")
     validation = load_from_disk("data/raw/validation")
-    
+
     return training, testing, validation
+
 
 def test_raw_data_sample_sizes():
     training, testing, validation = load_raw_data()
