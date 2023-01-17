@@ -1,14 +1,8 @@
-import argparse
 import os
-import sys
 
-import click
 import hydra
 import numpy as np
-import torch
 from datasets import load_from_disk, load_metric
-from torch import nn, optim
-from torch.utils.data import DataLoader, Dataset
 from transformers import (AutoModelForSequenceClassification, AutoTokenizer,
                           DataCollatorWithPadding, Trainer, TrainingArguments)
 from wandb.sdk.integration_utils.data_logging import ValidationDataLogger
