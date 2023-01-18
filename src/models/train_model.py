@@ -93,3 +93,18 @@ def main(cfg):
 
 if __name__ == "__main__":
     main()
+
+    # Profiling: creates profile.dat, profile_time.txt and profile_calls.txt with profiling info
+    import cProfile
+    cProfile.run('main()', "profile.dat")
+
+    import pstats
+    from pstats import SortKey
+    
+    with open("profile_time.txt", "w") as f:
+        p = pstats.Stats("profile.dat", stream=f)
+        p.sort_stats("time").print_stats()
+    
+    with open("profile_calls.txt", "w") as f:
+        p = pstats.Stats("profile.dat", stream=f)
+        p.sort_stats("calls").print_stats()
