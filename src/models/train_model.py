@@ -9,6 +9,10 @@ from wandb.sdk.integration_utils.data_logging import ValidationDataLogger
 
 import wandb
 
+import pstats
+from pstats import SortKey
+import cProfile
+
 wandb.login()
 wandb.init(
     # set the wandb project where this run will be logged
@@ -57,33 +61,51 @@ def main(cfg):
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
     training_args = TrainingArguments(
-        report_to='wandb',                    # enable logging to W&B
-        output_dir=os.path.join("models/",cfg.experiment_name),              # set output directory
+        report_to='wandb',                                      # enable logging to W&B
+        output_dir=os.path.join("models/",cfg.experiment_name), # set output directory
         overwrite_output_dir=True,
-        evaluation_strategy='steps',          # check evaluation metrics on a given # of steps
-        learning_rate=cfg.lr,                   # we can customize learning rate
+        evaluation_strategy='steps',                            # check evaluation metrics on a given # of steps
+        learning_rate=cfg.lr,                                   # we can customize learning rate
         max_steps=cfg.max_steps,
-        logging_steps=cfg.logging_steps,                    # we will log every 100 steps
-        eval_steps=cfg.eval_steps,                       # we will perform evaluation every 1000 steps
-        eval_accumulation_steps=cfg.eval_accumulation_steps,            # report evaluation results after each step
+        logging_steps=cfg.logging_steps,                        # we will log every 100 steps
+        eval_steps=cfg.eval_steps,                              # we will perform evaluation every 1000 steps
+        eval_accumulation_steps=cfg.eval_accumulation_steps,    # report evaluation results after each step
         load_best_model_at_end=cfg.load_best_model_at_end,
         metric_for_best_model='accuracy',
-        run_name='my_training_run'            # name of the W&B run
+        run_name='my_training_run'                              # name of the W&B run
     )
 
 
     trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=train_dataset, 
-        eval_dataset=val_dataset,
-        tokenizer=tokenizer,
-        data_collator=data_collator,
-        compute_metrics=compute_metrics,
-        dataloader_num_workers=8
+        model=model,                            # the instantiated 🤗 Transformers model to be trained
+        args=training_args,                     # training arguments, defined above
+        train_dataset=train_dataset,            # training dataset 
+        eval_dataset=val_dataset,               # evaluation dataset
+        tokenizer=tokenizer,                    # tokenizer, defined above
+        data_collator=data_collator,            # function to use to form a batch from a list of elements of train_dataset or eval_dataset
+        compute_metrics=compute_metrics,        # function that will be used to compute metrics at evaluation
+        dataloader_num_workers=8                # number of workers for distributed data loading
     )
+
+    # Train the model
     trainer.train()
+
+    # Evaluation of model
     trainer.evaluate()
+
+    # Save the model into models/
+    #trainer.save_model("models/")
 
 if __name__ == "__main__":
     main()
+
+    # Profiling: creates profile.dat, profile_time.txt and profile_calls.txt with profiling info
+    cProfile.run('main()', "profile.dat")
+    
+    with open("profile_time.txt", "w") as f:
+        p = pstats.Stats("profile.dat", stream=f)
+        p.sort_stats("time").print_stats()
+    
+    with open("profile_calls.txt", "w") as f:
+        p = pstats.Stats("profile.dat", stream=f)
+        p.sort_stats("calls").print_stats()
