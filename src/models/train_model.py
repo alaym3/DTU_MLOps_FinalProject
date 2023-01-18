@@ -80,6 +80,7 @@ def main(cfg):
         tokenizer=tokenizer,
         data_collator=data_collator,
         compute_metrics=compute_metrics,
+        dataloader_num_workers=8
     )
     trainer.train()
     trainer.evaluate()
