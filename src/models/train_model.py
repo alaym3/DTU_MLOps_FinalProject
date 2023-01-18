@@ -74,6 +74,7 @@ def main(cfg):
 
         metric_for_best_model='accuracy',
         run_name='my_training_run'                              # name of the W&B run
+        dataloader_num_workers=8                # number of workers for distributed data loading
     )
 
 
@@ -85,7 +86,6 @@ def main(cfg):
         tokenizer=tokenizer,                    # tokenizer, defined above
         data_collator=data_collator,            # function to use to form a batch from a list of elements of train_dataset or eval_dataset
         compute_metrics=compute_metrics,        # function that will be used to compute metrics at evaluation
-        dataloader_num_workers=8                # number of workers for distributed data loading
     )
 
     # Train the model
