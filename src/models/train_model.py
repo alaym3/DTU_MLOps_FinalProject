@@ -21,10 +21,6 @@ def main(cfg):
     train_dataset = load_from_disk(os.path.join(dataset_path, "tokenized_train"))
     val_dataset = load_from_disk(os.path.join(dataset_path,"tokenized_validation"))
 
-# # Load train and validation sets
-# train_dataset = load_from_disk("data/processed/tokenized_train")
-# val_dataset = load_from_disk("data/processed/tokenized_validation")
-
     validation_inputs = val_dataset.remove_columns(['label', 'attention_mask', 'input_ids'])
     validation_targets = [val_dataset.features['label'].int2str(x) for x in val_dataset['label']]
 
@@ -33,12 +29,9 @@ def main(cfg):
         targets = validation_targets
     )
    
-
-# print(validation_inputs,validation_targets)
-# Define the evaluation metrics
-
     accuracy_metric = load_metric("accuracy")
-
+    
+    # Define the evaluation metrics
     def compute_metrics(eval_pred):
         predictions, labels = eval_pred
         predictions = np.argmax(predictions, axis=1)
