@@ -106,6 +106,11 @@ def main(cfg):
 
     # Evaluation of model
     trainer.evaluate()
+    trainer.save_model(os.path.join("models/",cfg.experiment_name))
+
+    # Save the model into models/
+    trainer.save_model(os.path.join("models/", cfg.train.experiment_name))
+
 
     # Save the model into models/
     trainer.save_model(os.path.join("models/", cfg.train.experiment_name))
