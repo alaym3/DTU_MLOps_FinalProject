@@ -1,0 +1,5 @@
+#config.yaml
+
+dataset_name: 'rotten_tomatoes'
+input_filepath: 'data/raw'
+output_filepath: 'data/processed'

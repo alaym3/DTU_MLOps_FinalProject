@@ -14,7 +14,7 @@ wandb.init(
     # set the wandb project where this run will be logged
     project="rotten_tomatoes")
 
-@hydra.main(config_path="../../config", config_name="model_config.yaml")
+@hydra.main(config_path="../../config", config_name="config_default.yaml")
 def main(cfg):
     # Load train and validation sets
     dataset_path = os.path.join(hydra.utils.get_original_cwd(), 'data/processed/')
@@ -47,7 +47,7 @@ def main(cfg):
         return accuracy_metric.compute(predictions=predictions, references=labels)
 
     # Load BERT-base-uncased model
-    model_name = cfg.model # "distilbert-base-uncased" # "bert-base-uncased"
+    model_name = cfg.train.model # "distilbert-base-uncased" # "bert-base-uncased"
     model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
 
     # Set DistilBERT tokenizer
@@ -58,15 +58,15 @@ def main(cfg):
 
     training_args = TrainingArguments(
         report_to='wandb',                    # enable logging to W&B
-        output_dir=os.path.join("models/",cfg.experiment_name),              # set output directory
+        output_dir=os.path.join("models/",cfg.train.experiment_name),              # set output directory
         overwrite_output_dir=True,
         evaluation_strategy='steps',          # check evaluation metrics on a given # of steps
-        learning_rate=cfg.lr,                   # we can customize learning rate
-        max_steps=cfg.max_steps,
-        logging_steps=cfg.logging_steps,                    # we will log every 100 steps
-        eval_steps=cfg.eval_steps,                       # we will perform evaluation every 1000 steps
-        eval_accumulation_steps=cfg.eval_accumulation_steps,            # report evaluation results after each step
-        load_best_model_at_end=cfg.load_best_model_at_end,
+        learning_rate=cfg.train.lr,                   # we can customize learning rate
+        max_steps=cfg.train.max_steps,
+        logging_steps=cfg.train.logging_steps,                    # we will log every 100 steps
+        eval_steps=cfg.train.eval_steps,                       # we will perform evaluation every 1000 steps
+        eval_accumulation_steps=cfg.train.eval_accumulation_steps,            # report evaluation results after each step
+        load_best_model_at_end=cfg.train.load_best_model_at_end,
         metric_for_best_model='accuracy',
         run_name='my_training_run'            # name of the W&B run
     )

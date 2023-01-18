@@ -1,5 +1,0 @@
-model: "bert-base-uncased"
-lr: 2e-5
-epochs: 1
-weight_decay: 0.01
-batch_size: 16
