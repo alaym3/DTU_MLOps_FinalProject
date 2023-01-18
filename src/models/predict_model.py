@@ -16,11 +16,11 @@ outputs = model(**inputs, labels=labels)
 predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
 predictions = predictions.cpu().detach().numpy()
 
-# store the positive and negative predictions
+# Store the positive and negative predictions
 neg_prediction = round(predictions[0][0]*100, 2)
 pos_prediction = round(predictions[0][1]*100, 2)
 
-# print results
+# Print results
 print('Predictions for the phrase "' + text + '" : ', predictions)
 print(f'Probability of the phrase being negative: {neg_prediction}%')
 print(f'Probability of the phrase being positive: {pos_prediction}%')
