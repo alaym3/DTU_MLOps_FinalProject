@@ -9,6 +9,10 @@ from wandb.sdk.integration_utils.data_logging import ValidationDataLogger
 
 import wandb
 
+import pstats
+from pstats import SortKey
+import cProfile
+
 wandb.login()
 wandb.init(
     # set the wandb project where this run will be logged
@@ -80,6 +84,7 @@ def main(cfg):
         tokenizer=tokenizer,                    # tokenizer, defined above
         data_collator=data_collator,            # function to use to form a batch from a list of elements of train_dataset or eval_dataset
         compute_metrics=compute_metrics,        # function that will be used to compute metrics at evaluation
+        dataloader_num_workers=8                # number of workers for distributed data loading
     )
 
     # Train the model
@@ -95,11 +100,7 @@ if __name__ == "__main__":
     main()
 
     # Profiling: creates profile.dat, profile_time.txt and profile_calls.txt with profiling info
-    import cProfile
     cProfile.run('main()', "profile.dat")
-
-    import pstats
-    from pstats import SortKey
     
     with open("profile_time.txt", "w") as f:
         p = pstats.Stats("profile.dat", stream=f)
