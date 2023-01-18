@@ -1,0 +1,6 @@
+[theme]
+primaryColor="red"
+backgroundColor="lavender"
+secondaryBackgroundColor= '#FFF0F5' # "#F1D4DC" 
+textColor="indigo"
+font="sans serif"
