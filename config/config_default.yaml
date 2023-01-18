@@ -1,0 +1,3 @@
+defaults:
+    - train: train_config_1.yaml
+    - data: data_config.yaml
