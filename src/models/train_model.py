@@ -20,6 +20,8 @@ wandb.init(
 
 @hydra.main(config_path="../../config", config_name="config_default.yaml")
 def main(cfg):
+    output_dir=os.path.join("models/",cfg.experiment_name)
+    print(output_dir)
     # Load train and validation sets
     dataset_path = os.path.join(hydra.utils.get_original_cwd(), 'data/processed/')
     train_dataset = load_from_disk(os.path.join(dataset_path, "tokenized_train"))
@@ -93,6 +95,7 @@ def main(cfg):
 
     # Evaluation of model
     trainer.evaluate()
+    trainer.save_model(os.path.join("models/",cfg.experiment_name))
 
     # Save the model into models/
     #trainer.save_model("models/")
