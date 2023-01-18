@@ -1,22 +1,16 @@
+import cProfile
 import os
+import pstats
+from pstats import SortKey
 
 import hydra
 import numpy as np
 from datasets import load_from_disk, load_metric
-from transformers import (
-    AutoModelForSequenceClassification,
-    AutoTokenizer,
-    DataCollatorWithPadding,
-    Trainer,
-    TrainingArguments,
-)
+from transformers import (AutoModelForSequenceClassification, AutoTokenizer,
+                          DataCollatorWithPadding, Trainer, TrainingArguments)
 from wandb.sdk.integration_utils.data_logging import ValidationDataLogger
 
 import wandb
-
-import pstats
-from pstats import SortKey
-import cProfile
 
 wandb.login()
 wandb.init(
@@ -106,11 +100,6 @@ def main(cfg):
 
     # Evaluation of model
     trainer.evaluate()
-    trainer.save_model(os.path.join("models/",cfg.experiment_name))
-
-    # Save the model into models/
-    trainer.save_model(os.path.join("models/", cfg.train.experiment_name))
-
 
     # Save the model into models/
     trainer.save_model(os.path.join("models/", cfg.train.experiment_name))
