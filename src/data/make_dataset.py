@@ -12,13 +12,16 @@ from transformers import AutoTokenizer
 
 
 def get_tokenizer():
+    '''Get the tokenizer
+    '''
     tokenizer_type = "bert-base-uncased"
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_type, use_fast=False)
     return tokenizer
 
 
-# Prepare the text inputs for the model
 def preprocess_function(examples):
+    '''Prepare the text inputs for the model.
+    '''
     tokenizer = get_tokenizer()
     return tokenizer(examples["text"], truncation=True)
 
@@ -26,7 +29,7 @@ def preprocess_function(examples):
 @click.command()
 @click.argument("input_filepath", type=click.Path(exists=True))
 @click.argument("output_filepath", type=click.Path())
-def main(input_filepath, output_filepath):
+def main(input_filepath: str, output_filepath: str):
     """Runs data processing scripts to turn raw data from (../raw) into
     cleaned data ready to be analyzed (saved in ../processed).
     """

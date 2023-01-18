@@ -1,3 +1,4 @@
+from typing import Any
 import argparse
 # turn off wandb so that this can run in docker
 import os
@@ -33,10 +34,10 @@ train_dataset = load_from_disk("data/processed/tokenized_train")
 val_dataset = load_from_disk("data/processed/tokenized_validation")
 
 # Define the evaluation metrics
-def compute_metrics(eval_pred):
+def compute_metrics(eval_pred: Any) -> dict[str,float]:
     '''Defines the evaluation metrics.
            Parameters:
-               eval_pred
+               eval_pred (class): 'transformers.trainer_utils.EvalPrediction'
        Returns a dictionary string to metric values.
     '''
     load_accuracy = load_metric("accuracy")
