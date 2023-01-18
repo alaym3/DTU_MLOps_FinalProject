@@ -92,4 +92,18 @@ def main(cfg):
     #trainer.save_model("models/")
 
 if __name__ == "__main__":
-    main()
+    #main()
+    
+    import cProfile
+    cProfile.run('main()', "profile.dat")
+
+    import pstats
+    from pstats import SortKey
+    
+    with open("profile_time.txt", "w") as f:
+        p = pstats.Stats("profile.dat", stream=f)
+        p.sort_stats("time").print_stats()
+    
+    with open("profile_calls.txt", "w") as f:
+        p = pstats.Stats("profile.dat", stream=f)
+        p.sort_stats("calls").print_stats()
