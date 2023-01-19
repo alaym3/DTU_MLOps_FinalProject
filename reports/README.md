@@ -258,13 +258,19 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 >
 > Answer:
 
---- ![Accuracy](figures/accuracy.png)
-The first figure tracks the accuracy of the different models. As seen in the figure, run-1 and run-3 have almost the same accuracy throughout the training, while run-2 has lower accuracy.
-![Learning Rate](figures/learning_rate.png)
-The second figure shows the learning rate at each iteration for the different models. Run-2 has a steep decline in its learning rate compared to run-1 and run-3.
-![Train loss](figures/train_loss.png)
+--- 
+<!-- ![Accuracy](figures/accuracy.png) -->
+<img src="figures/accuracy.png" height="600" width="800" > <br>
+The first figure tracks the accuracy of the different models. As seen in the figure, run-1 and run-3 have almost the same accuracy throughout the training, while run-2 has lower accuracy. <br>
+<br>
+<!-- ![Learning Rate](figures/learning_rate.png) -->
+<img src="figures/learning_rate.png" height="600" width="800" > <br>
+The second figure shows the learning rate at each iteration for the different models. Run-2 has a steep decline in its learning rate compared to run-1 and run-3.<br>
+<br>
+<!-- ![Train loss](figures/train_loss.png) -->
+<img src="figures/train_loss.png" height="600" width="800" > <br>
 The third figure shows the training loss for all our models, with run-1 being the lowest and run-2 being the highest.
-
+<br>
 Using these metrics we were able to conclude that the model parameters used in run-1 were the most optimal for our dataset. This model was further used for prediction. ---
 
 ### Question 15
@@ -286,8 +292,8 @@ Using these metrics we were able to conclude that the model parameters used in r
 3. Once working locally, tag the image
 4. Push the image to our project on GCP
 5. Run a gcloud command depending on what we want to do: such as automatically creating a Cloud Run job, creating a training run on Vertex AI, or deploying the model in the model registry on Vertex AI
-The dockerfile for deploying our app via streamlit on Cloud Run is contained inside [this file](https://github.com/alaym3/DTU_MLOps_FinalProject/tree/main/docker/streamlit.dockerfile.md)
-Here is an overview of the dockerfile:
+The dockerfile for deploying our app via streamlit on Cloud Run is contained inside [this file](https://github.com/alaym3/DTU_MLOps_FinalProject/tree/main/docker/streamlit.dockerfile). <br>
+Here is an overview of the dockerfile: <br>
 - use python 3.9-slim
 - expose port 8080 to ensure that the streamlit web app works appropriately with Cloud Run
 - copy all the necessary files from the repo
