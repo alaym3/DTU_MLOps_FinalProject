@@ -3,7 +3,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 
 def load_model():
-    model = AutoModelForSequenceClassification.from_pretrained("models")
+    model = AutoModelForSequenceClassification.from_pretrained("./models")
     tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
 
     return model, tokenizer
