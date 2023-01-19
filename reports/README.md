@@ -279,7 +279,7 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 3. Once working locally, tag the image
 4. Push the image to our project on GCP
 5. Run a gcloud command depending on what we want to do: such as automatically creating a Cloud Run job, creating a training run on Vertex AI, or deploying the model in the model registry on Vertex AI
-The dockerfile for deploying our app via streamlit on Cloud Run is contained inside [this file](https://github.com/alaym3/DTU_MLOps_FinalProject/blob/main/docker/streamlit.dockerfile.md)
+The dockerfile for deploying our app via streamlit on Cloud Run is contained inside [this file](https://github.com/alaym3/DTU_MLOps_FinalProject/tree/main/docker/streamlit.dockerfile.md)
 Here is an overview of the dockerfile:
 - use python 3.9-slim
 - expose port 8080 to ensure that the streamlit web app works appropriately with Cloud Run
