@@ -3,9 +3,9 @@ from datasets import load_from_disk
 
 def load_tokenized_data():
     # Load train and validation sets
-    training = load_from_disk("./data/processed/tokenized_train")
-    testing = load_from_disk("./data/processed/tokenized_test")
-    validation = load_from_disk("./data/processed/tokenized_validation")
+    training = load_from_disk("data/processed/tokenized_train")
+    testing = load_from_disk("data/processed/tokenized_test")
+    validation = load_from_disk("data/processed/tokenized_validation")
 
     return training, testing, validation
 
