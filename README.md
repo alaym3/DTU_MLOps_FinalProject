@@ -35,7 +35,7 @@ Our sentiment classification application uses [Streamlit](https://streamlit.io/)
 - have [Docker](https://www.docker.com/) installed and running
 - create a project in [Google Cloud](https://console.cloud.google.com/)
 - make sure you have money in your billing account since costs are incurred by the container!! 🤑🤑🤑
-- ensure you are [authenticated with google cloud auth]([https://cloud.google.com/sdk/gcloud/reference/auth/activate-service-account](https://cloud.google.com/container-registry/docs/advanced-authentication) - check the `gcloud auth activate-service-account` command specifically. [This article](https://cloud.google.com/sdk/gcloud/reference/auth/activate-service-account) may also help.
+- ensure you are [authenticated with google cloud auth](https://cloud.google.com/container-registry/docs/advanced-authentication) - check the `gcloud auth activate-service-account` command specifically. [This article](https://cloud.google.com/sdk/gcloud/reference/auth/activate-service-account) may also help.
 - add a creds folder and a creds.json inside of it (pertaining to the config.json file auto created by the above steps), connected to your project in Google Cloud
 - run the streamlit.dockerfile found in the docker folder, tag it, push the image to your project, then run a command to auto deploy via Cloud Run. Example below:
    - `docker build --platform linux/amd64 -f docker/streamlit.dockerfile . -t streamlit:latest`
