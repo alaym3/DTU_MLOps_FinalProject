@@ -107,7 +107,7 @@ be installed with `pip install click markdown`.
 > *experiments.*
 > Answer:
 
---- We created the cookiecutter template and filled in the folders and scripts as needed. These were mainly the src/models/ and src/data/ for coding the model, but we have of course also put our files in the data/ folder (although without interim or external data), our unittests in the tests/ folder and the model outputs in the models/ folder. We also have kept the makefile, the readme file, the requirements file and the setup file, as they are essential parts of a repository. On the other hand, we have removed the notebooks/ and references/ folders since we do not have other materials for exploration or explanations, and some others within the main folders, such as src/visualization/, src/features/ and the aforementioned data/interim and data/external, since we did not work with any of these aspects in our project. Besides the cookiecutter structure, we have added a folder for dvc (.dvc/) and others for configuration files (.config/ and src/models/config/). ---
+--- We created the cookiecutter template and filled in the folders and scripts as needed. These were mainly the src/models/ and src/data/ for coding the model, but we have of course also put our files in the data/ folder (although without interim or external data), our unittests in the tests/ folder and the model outputs in the models/ folder. We also have kept the makefile, the readme file, the requirements file and the setup file, as they are essential parts of a repository. On the other hand, we have removed the notebooks/ and references/ folders since we do not have other materials for exploration or explanations, and some others within the main folders, such as src/visualization/, src/features/ and the aforementioned data/interim and data/external, since we did not work with any of these aspects in our project. Besides the cookiecutter structure, we have added a folder for dvc (.dvc/), other folders for configuration files (.config/ and src/models/config/), a folder for all docker files (.docker/), a folder for the output of the performed profiling (.profiling/), a folder for our FastAPI script (.fastapi/) and a folder for our streamlit app (.streamlit/). ---
 
 ### Question 6
 
@@ -195,7 +195,7 @@ In any case, not all the parts of the source code were checked, as there are man
 
 --- We mainly created unit tests for our data and models in 3 separate files as explained before, with a total coverage of 98%. Besides that, we also implemented GitHub actions to implement our unittests on 3 operating systems (Ubuntu, MacOS, Windows), on the 3.8 Python version, with caching and every time there was a push or a pull from the branches 'main' and 'alaina'. This action can be seen in the following link: https://github.com/alaym3/DTU_MLOps_FinalProject/actions/workflows/tests.yml
 Moreover, we implemented branch protection rules for the 'main' branch so that we would not accept a pull request without passing tests and having peer-review. We established the need to have somebody else accept a PR, pass all tests in all workflows and resolve all conversations, which was very useful to not merge anything accidentally.
-Lastly, we introduced linting so as to maintain good practices throughout the project. We did this for isort, to keep the packages organized; for flake8, to find the points where the code wasn't compling with the coding practices of pep8 and for black, to automatically format it, fixing the issues found. We also set it up so that it run every time there was a push or a pull from the aforementioned branches. ---
+Lastly, we introduced linting so as to maintain good practices throughout the project. We did this for isort, to keep the packages organized; for flake8, to find the points where the code wasn't compling with the coding practices of pep8 and for black, to automatically format it, fixing the issues found. We also set it up so that it run every time there was a push or a pull from the main branch. ---
 
 ## Running code and tracking experiments
 
@@ -219,13 +219,13 @@ Answer length: 50-100 words.
 We decided that an argument parser was not needed if we implemented Hydra. Therefore, we created a model_config.yaml file that allowed us to change the chosen hyperparameters of the model training. We were interested in testing different kinds of models (bert-base-uncased and distilbert-base-uncased) and different batch sizes, learning rates, weight decays and training epochs.
 Inside the model script (train_model_hydra.py), we created a function in which we passed the hyperparameters in this way:
 
-@hydra.main(config_path="config", config_name="model_config.yaml")
-def main(cfg):
-model_name = cfg.model
-model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
+`@hydra.main(config_path="config", config_name="model_config.yaml")`
+`def main(cfg):`
+`model_name = cfg.model`
+`model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)`
 
 To run the model with non-default hyperparameters we would run:
-python train_model_hydra.py model="bert-base-uncased" ---
+`python train_model_hydra.py model="bert-base-uncased"` ---
 
 ### Question 13
 
@@ -279,7 +279,7 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 3. Once working locally, tag the image
 4. Push the image to our project on GCP
 5. Run a gcloud command depending on what we want to do: such as automatically creating a Cloud Run job, creating a training run on Vertex AI, or deploying the model in the model registry on Vertex AI
-The dockerfile for deploying our app via streamlit on Cloud Run is contained inside [this file](https://github.com/alaym3/DTU_MLOps_FinalProject/blob/main/streamlit.dockerfile.md)
+The dockerfile for deploying our app via streamlit on Cloud Run is contained inside [this file](https://github.com/alaym3/DTU_MLOps_FinalProject/tree/main/docker/streamlit.dockerfile.md)
 Here is an overview of the dockerfile:
 - use python 3.9-slim
 - expose port 8080 to ensure that the streamlit web app works appropriately with Cloud Run
@@ -326,7 +326,7 @@ Here is an overview of the dockerfile:
 >
 > Answer:
 
---- We used the following services: Storage, Container Registry, Run and Monitoring. Cloud Storage is used for storage of the data that we are using (the rotten tomatoes dataset). Container Registry has been used to store and manage Docker images. Cloud Run has been used to run our containers and deploy our application. Lastly Cloud Monitoring was used in our project to create alerts. We created one alert that notifies us when the the storage data in the model bucket surpasses a certain limit. ---
+--- We used the following services: Storage, Container Registry, Run and Monitoring. Cloud Storage is used for storage of the data that we are using (the rotten tomatoes dataset). Container Registry has been used to store and manage Docker images. Cloud Run has been used to run our containers and deploy our application. Lastly, Cloud Monitoring was used in our project to create alerts. We created one alert that notifies us when the the storage data in the model bucket surpasses a certain limit. ---
 
 ### Question 18
 
@@ -432,11 +432,13 @@ Lastly, we wanted to check the robustness of our model to data drifting but we d
 > Example:
 >
 > *The starting point of the diagram is our local setup, where we integrated ... and ... and ... into our code.*
-> *Whenever we commit code and puch to github, it auto triggers ... and ... . From there the diagram shows ...*
+> *Whenever we commit code and push to github, it auto triggers ... and ... . From there the diagram shows ...*
 >
 > Answer:
 
---- Overall architecture of our system in ![this figure](figures/q25-overallarchitecture.png). ---
+--- Overall architecture of our system in ![this figure](figures/q25-overallarchitecture.png). 
+
+The project started by choosing our framework (Transformers) and dataset (Rotten Tomatoes review dataset). So we started locally with the ML code and optimisation. In this step we have used `Conda` to set up our project environment, PyTorch as a deep learning framework for the training and predicting of our model. At some point we also have used pythons build in profiler cProfile to see the performance of our code, and the library `Pytest` to test our code. As good coding practices for our project, we have used the cookie cutter template to get all our code organised, `mypy` as a type checker to find mistakes while typing our code, and `flake8`, `black` and `isort` for styling our code in a specific way. These last ones were implemented as GitHub actions. As a repository hosting and version controller, we used GitHub, where we stored our code files. However, for our data and model (since they are both large files), we stored them in the cloud. For the experiment logging, we have used both `Hydra`and `Weights&Biases`. The first one as a configuration tool to keep track of the hyper-parameters and the second one to record, organise and share our experiments. ---
 
 ### Question 26
 
@@ -467,4 +469,4 @@ Lastly, we wanted to check the robustness of our model to data drifting but we d
 >
 > Answer:
 
---- question 27 fill here ---
+--- We all contributed actively in the project and divided the tasks. Alaina was in charge of creating the repository, creating the cookiecutter structure and setting the coding practices. She also did some unittests for the data, created and built the docker images and deployed the app on Streamlit. As well, together with Siddhi, she worked on deploying our model in the cloud. Siddhi was responsible for loading the data and doing all the data processing, executing the training experiments and logging them in W&B and dealt with the version control and storage of our data in gcp buckets. Alejandra and Carolina wrote the training script, deployed the app locally with FastAPI and evaluated the feasibility of minimizing boilerplate, checking data drifting, doing quantization and monitoring the FastAPI app with OpenTelemetry. Alejandra was also in charge of doing the predict_model script, code typing and commenting and profiling. Lastly, Carolina worked on incorporating Hydra, created unit tests for the model output and checked the coverage of the tests, included distributed data loading and added alerts on gcp. She also implemented GitHub actions with Alaina. ---
