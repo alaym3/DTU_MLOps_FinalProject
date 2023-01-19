@@ -350,7 +350,7 @@ Here is an overview of the dockerfile:
 >
 > Answer:
 
---- ![Q19 figure](https://github.com/alaym3/DTU_MLOps_FinalProject/reports/figures/q19.png) ---
+--- ![Q19 figure](figures/q19.png) ---
 
 ### Question 20
 
@@ -359,7 +359,7 @@ Here is an overview of the dockerfile:
 >
 > Answer:
 
---- ![Q20 figure](https://github.com/alaym3/DTU_MLOps_FinalProject/reports/figures/q20.png) ---
+--- ![Q20 figure](figures/q20.png) ---
 
 ### Question 21
 
@@ -368,7 +368,7 @@ Here is an overview of the dockerfile:
 >
 > Answer:
 
---- ![Q21 figure](https://github.com/alaym3/DTU_MLOps_FinalProject/reports/figures/q21.png) ---
+--- ![Q21 figure](figures/q21.png) ---
 
 ### Question 22
 
@@ -436,7 +436,7 @@ Lastly, we wanted to check the robustness of our model to data drifting but we d
 >
 > Answer:
 
---- Overall architecture of our system in ![this figure](https://github.com/alaym3/DTU_MLOps_FinalProject/reports/figures/q25-overallarchitecture.png). ---
+--- Overall architecture of our system in ![this figure](figures/q25-overallarchitecture.png). ---
 
 ### Question 26
 
