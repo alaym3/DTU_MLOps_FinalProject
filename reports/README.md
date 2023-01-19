@@ -92,7 +92,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 4 fill here ---
+--- We each auto-generated a list of requirements using pipreqs . on our computers and afterwards merged our respective requirements files into one, since each of us had installed different packages to incorporate different tools into our project. That said, we mainly used a Makefile for managing our dependencies. In this file we included shortcuts to train and test our model, make predictions of new data, create linting on our source folder and so on, but most importantly, we added shortchuts to create an environment, and to install all the requirements. Thus, for a copy of our environment, a new team member would have to clone our repository in their local machine and write the following commands on the terminal: make create_environment and afterwards make requirements. ---
 
 ### Question 5
 
@@ -327,7 +327,7 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 >
 > Answer:
 
---- question 19 fill here ---
+--- ![Q19 figure](https://github.com/alaym3/DTU_MLOps_FinalProject/reports/figures/q19.png) ---
 
 ### Question 20
 
@@ -336,7 +336,7 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 >
 > Answer:
 
---- question 20 fill here ---
+--- ![Q20 figure](https://github.com/alaym3/DTU_MLOps_FinalProject/reports/figures/q20.png) ---
 
 ### Question 21
 
@@ -345,7 +345,7 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 >
 > Answer:
 
---- question 21 fill here ---
+--- ![Q21 figure](https://github.com/alaym3/DTU_MLOps_FinalProject/reports/figures/q21.png) ---
 
 ### Question 22
 
@@ -376,7 +376,9 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 >
 > Answer:
 
---- question 23 fill here ---
+--- We implemented an alert on gcp to send us an email if the bucket in which the model was stored surpassed a certain storage limit. However, we haven't needed to monitor the model performance, since we did't do our experiments on the cloud but locally. Ideally, we could have implemented more alerts, for example to be aware when our VertexAI pipeline fails.
+As well, we attempted to use OpenTelemetry to monitor the telemetry data of our FastAPI app, but even though we managed to open the Signoz visualization interface, we were unable to visualize our app on either Windows or MacOS. This would have helped monitor the quality and behavior of our app in the long term.
+Lastly, we wanted to check the robustness of our model to data drifting but we did't do it because of time constraints. The reason for this is that as our data is in the form of text, we had to perform feature extraction and then use EvidentlyAI for data drifting. This could have been a good experiment to see if the model is strong against changes in the way people speak throughout time, since our data consists of movie reviews from RottenTomatoes. ---
 
 ### Question 24
 
