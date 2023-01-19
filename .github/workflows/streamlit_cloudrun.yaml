@@ -34,6 +34,7 @@ jobs:
       run: |
         dvc pull
 
+
     # Setup gcloud CLI
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
@@ -43,7 +44,7 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker build --platform linux/amd64 -f docker/streamlit.dockerfile . -t streamlit:latest
+        docker build --platform linux/amd64 -f docker/streamlit_cloudrun.dockerfile . -t streamlit:latest
         docker tag streamlit:latest gcr.io/final-project-374512/streamlit
         docker push gcr.io/final-project-374512/streamlit   
     - name: Deploy to Cloud Run
