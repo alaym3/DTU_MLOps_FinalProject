@@ -110,9 +110,9 @@ if __name__ == "__main__":
     cProfile.run("main()", "profiling/profile.dat")
 
     with open("profiling/profile_time.txt", "w") as f:
-        p = pstats.Stats("profile.dat", stream=f)
+        p = pstats.Stats("profiling/profile.dat", stream=f)
         p.sort_stats("time").print_stats()
 
     with open("profiling/profile_calls.txt", "w") as f:
-        p = pstats.Stats("profile.dat", stream=f)
+        p = pstats.Stats("profiling/profile.dat", stream=f)
         p.sort_stats("calls").print_stats()
