@@ -92,7 +92,10 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- We each auto-generated a list of requirements using pipreqs . on our computers and afterwards merged our respective requirements files into one, since each of us had installed different packages to incorporate different tools into our project. That said, we mainly used a Makefile for managing our dependencies. In this file we included shortcuts to train and test our model, make predictions of new data, create linting on our source folder and so on, but most importantly, we added shortchuts to create an environment, and to install all the requirements. Thus, for a copy of our environment, a new team member would have to clone our repository in their local machine and write the following commands on the terminal: make create_environment and afterwards make requirements. ---
+--- We each auto-generated a list of requirements using `pipreqs` on our computers and updated our `requirements.txt` each time we added any code. That said, we mainly used a Makefile for managing our dependencies. Thus, for a copy of our environment, a new team member would have to clone our repository in their local machine and run the commands 
+ - `pip install -r requirements.txt`
+ - `make data` - to download the data and put it in the right format
+ - `make train` - to run the training on downloded data and save the model files locally ---
 
 ### Question 5
 
@@ -118,7 +121,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- We have used flake8, black and isort as tools for styling our code. We have used flake8 to check if our code is pep8 compliant. Then, black to reformat the code automatically to pep8 compliant, instead of fixing our own errors manually. Lastly, we have used the library isort to sort imports alphabetically and automatically separated into sections and by type. These tools are convenient for larger projects since it is good practice that all people working together in the same project have the same format and style. ---
+--- We have used `flake8`, `black` and `isort` as tools for styling our code. We have used flake8 to check if our code is pep8 compliant. Then, `black` to reformat the code automatically to be pep8 compliant, which automates the formatting. Lastly, we have used the library `isort` to sort imports alphabetically and automatically separate them into sections and by type. These tools are convenient for larger projects since it is good practice that all people working together in the same project have the same format and style. ---
 
 ## Version control
 
@@ -131,11 +134,11 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- We have implemented a total of 8 tests. 3 of these tested that the lengths of the train, test and validation raw subsets were appropriate and also that we were correctly identifying each subset as such. Other 3 test also tested the sizes of the tokenized texts (processed data). This was critical to ensure the correct tokenization of the texts. Lastly, 2 more tests were done to the model, to check that it was working correctly. We tested the size of the output (to match the number of classes) and that the predictions were probabilities between 0 and 1. ---
+--- We have implemented a total of 8 tests. We included tests to check the length of the train, test and validation datasets before preprocessing. Next we checked the shape of the tokenized datasets post-processing to ensure that our data processing scripts were running correctly. We also made tests to check if the prediction script produces the correct values. We tested the size of the output (to match the number of classes) and that the predictions were probabilities between 0 and 1. ---
 
 ### Question 8
 
-> **What is the total code coverage (in percentage) of your code? If you code had an code coverage of 100% (or close**
+> **What is the total code coverage (in percentage) of your code? If your code had a code coverage of 100% (or close**
 > **to), would you still trust it to be error free? Explain you reasoning.**
 >
 > **Answer length: 100-200 words.**
@@ -146,12 +149,12 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- The coverage of the code is 98%, which tests the source code of making the dataset and of training the model. The coverage of the datasets is of 100%, but that of the model is 96%. There was a skipped line in test_model.py (line 17), which belongs to the content of an if statement that is never applied, which is the reason why the percentage is not 100%.
+--- The average coverage of the code is 98%, which tests the code for making the datasets and for making predictions. The coverage of the dataset code is 100%, but that of the model is 96%. There was a skipped line in test_model.py (line 17), which belongs to the content of an if statement that is never applied, which is the reason why the percentage is not 100%.
 In any case, not all the parts of the source code were checked, as there are many aspects that could be tested and more tests can always be done. As well, it is likely that the tests themselves are biased because we created them after looking at the outputs the model produces. ---
 
 ### Question 9
 
-> **Did you workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
+> **Did your workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
 > **pull request can help improve version control.**
 >
 > Answer length: 100-200 words.
@@ -162,7 +165,7 @@ In any case, not all the parts of the source code were checked, as there are man
 >
 > Answer:
 
---- Our team has been using branches and pull requests. During our workflow each of the team members have been creating their own branches with their own committed changes. When a member of the group pushed to her branch new working files, the whole team was notified and a pull request was created. Then, another member of the group would review the pull request and merge to the main branch, where we have always kept the newest (working) version of our project. When we wanted to make new changes to the newest version, we would pull the main repository to our local repository, create a new branch or rebase an existing one to overwrite the last version the project. ---
+--- Our team has been using branches and pull requests. The main branch was protected with a few rules; i.e. at least one member needed to approve a pull request before allowing a merge. During our workflow each of the team members have been creating their own branches with their own committed changes. When a member of the group pushed to her branch new working files, the whole team was notified and a pull request was created. Each individual's branches were updated by rebasing from the main. We established the need to have somebody else accept a PR, pass all tests in all workflows and resolve all conversations, which was very useful to not merge anything accidentally.. ---
 
 ### Question 10
 
@@ -181,7 +184,7 @@ In any case, not all the parts of the source code were checked, as there are man
 
 ### Question 11
 
-> **Discuss you continues integration setup. What kind of CI are you running (unittesting, linting, etc.)? Do you test**
+> **Discuss your continuous integration setup. What kind of CI are you running (unittesting, linting, etc.)? Do you test**
 > **multiple operating systems, python version etc. Do you make use of caching? Feel free to insert a link to one of**
 > **your github actions workflow.**
 >
@@ -193,8 +196,7 @@ In any case, not all the parts of the source code were checked, as there are man
 >
 > Answer:
 
---- We mainly created unit tests for our data and models in 3 separate files as explained before, with a total coverage of 98%. Besides that, we also implemented GitHub actions to implement our unittests on 3 operating systems (Ubuntu, MacOS, Windows), on the 3.8 Python version, with caching and every time there was a push or a pull from the branches 'main' and 'alaina'. This action can be seen in the following link: https://github.com/alaym3/DTU_MLOps_FinalProject/actions/workflows/tests.yml
-Moreover, we implemented branch protection rules for the 'main' branch so that we would not accept a pull request without passing tests and having peer-review. We established the need to have somebody else accept a PR, pass all tests in all workflows and resolve all conversations, which was very useful to not merge anything accidentally.
+--- We mainly created unit tests for our data and models in 3 separate files as explained before. We implemented GitHub actions to implement our unit tests on 3 operating systems (Ubuntu, MacOS, Windows), on the 3.8 Python version with caching. Every time there was a push or a pull from the branches 'main' and 'alaina'. This action can be seen in [tests.yml](https://github.com/alaym3/DTU_MLOps_FinalProject/actions/workflows/tests.yml)
 Lastly, we introduced linting so as to maintain good practices throughout the project. We did this for isort, to keep the packages organized; for flake8, to find the points where the code wasn't compling with the coding practices of pep8 and for black, to automatically format it, fixing the issues found. We also set it up so that it run every time there was a push or a pull from the main branch. ---
 
 ## Running code and tracking experiments
@@ -214,18 +216,16 @@ Lastly, we introduced linting so as to maintain good practices throughout the pr
 >
 > Answer:
 
---- How did you configure experiments? Did you make use of config files? Explain with coding examples of how you would run a experiment.
-Answer length: 50-100 words.
-We decided that an argument parser was not needed if we implemented Hydra. Therefore, we created a model_config.yaml file that allowed us to change the chosen hyperparameters of the model training. We were interested in testing different kinds of models (bert-base-uncased and distilbert-base-uncased) and different batch sizes, learning rates, weight decays and training epochs.
-Inside the model script (train_model_hydra.py), we created a function in which we passed the hyperparameters in this way:
+--- We decided that an argument parser was not needed if we implemented Hydra. Therefore, we created a model_config.yaml file that allowed us to change the chosen hyperparameters of the model training. We were interested in testing different kinds of models (bert-base-uncased and distilbert-base-uncased) and different batch sizes, learning rates, weight decays and training epochs.
+Inside the model script (train_model.py), we created a function in which we passed the hyperparameters in this way:
 
-`@hydra.main(config_path="config", config_name="model_config.yaml")`
-`def main(cfg):`
-`model_name = cfg.model`
-`model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)`
+`@hydra.main(config_path="config", config_name="model_config.yaml")` <br>
+`def main(cfg):` <br>
+`model_name = cfg.model` <br>
+`model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)` <br>
 
-To run the model with non-default hyperparameters we would run:
-`python train_model_hydra.py model="bert-base-uncased"` ---
+To run the model with non-default hyperparameters we would run: <br>
+`python train_model_hydra.py model="distilbert-base-uncased"` ---
 
 ### Question 13
 
@@ -240,8 +240,8 @@ To run the model with non-default hyperparameters we would run:
 >
 > Answer:
 
---- The advantage of using Hydra is that the hyperparameters get recorded with the model output, so we do not have to record them manually ourselves. The outputs are written into an outputs folder with every training in a subfolder with subsubfolders for the models outputs and the config.yaml files, where the hyperparamers stablished in the command line when running the code are kept. To reproduce an experiment, one would have to look at these config.yaml lines and run the model with the same hyperparameters.
-As well, the entire reproducibility of our experiments is not guaranteed if we do not indicate other requisites such as the operating system or other software dependencies, which might be crucial to get the same results. For this, we created several Docker files, which span the main 3 activities that our code does: creating the processed data by tokenizing the RottenTomatoes dataset (makedataset.dockerfile), training the model (trainer.dockerfile) and make predictions for new texts (predict.dockerfile). ---
+--- The advantage of using Hydra is that the hyperparameters get recorded with the model output, so we do not have to record them manually ourselves. The outputs are written into an outputs folder with every training in a subfolder with subsubfolders for the models outputs and the config.yaml files, where the hyperparameters established in the command line when running the code are kept. To reproduce an experiment, one would have to look at these config.yaml files and run the model with the same hyperparameters.
+As well, the entire reproducibility of our experiments is not guaranteed if we do not indicate other prerequisites such as the operating system or other software dependencies, which might be crucial to get the same results. For this, we created 4 Docker files, one for each of our main scripts: making the datasets (makedataset.dockerfile), training the model (trainer.dockerfile), making predictions using the trained model (predict.dockerfile), deploying the model on streamlit (streamlit.dockerfile). ---
 
 ### Question 14
 
@@ -258,7 +258,14 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 >
 > Answer:
 
---- question 14 fill here ---
+--- ![Accuracy](figures/accuracy.png)
+The first figure tracks the accuracy of the different models. As seen in the figure, run-1 and run-3 have almost the same accuracy throughout the training, while run-2 has lower accuracy.
+![Learning Rate](figures/learning_rate.png)
+The second figure shows the learning rate at each iteration for the different models. Run-2 has a steep decline in its learning rate compared to run-1 and run-3.
+![Train loss](figures/train_loss.png)
+The third figure shows the training loss for all our models, with run-1 being the lowest and run-2 being the highest.
+
+Using these metrics we were able to conclude that the model parameters used in run-1 were the most optimal for our dataset. This model was further used for prediction. ---
 
 ### Question 15
 
@@ -326,7 +333,13 @@ Here is an overview of the dockerfile:
 >
 > Answer:
 
---- We used the following services: Storage, Container Registry, Run and Monitoring. Cloud Storage is used for storage of the data that we are using (the rotten tomatoes dataset). Container Registry has been used to store and manage Docker images. Cloud Run has been used to run our containers and deploy our application. Lastly, Cloud Monitoring was used in our project to create alerts. We created one alert that notifies us when the the storage data in the model bucket surpasses a certain limit. ---
+--- We used the following services: 
+ - Storage - Cloud Storage is used for storage of the data and models that we are using
+ - Container Registry - Container Registry has been used to store and manage Docker images
+ - Run - Cloud Run has been used to run our containers and deploy our application
+ - Monitoring - Cloud Monitoring was used in our project to create alerts. We created one alert that notifies us when the the storage data in the model bucket surpasses a certain limit
+ - VertexAI - Used for training and deploying our model
+  ---
 
 ### Question 18
 
@@ -341,7 +354,7 @@ Here is an overview of the dockerfile:
 >
 > Answer:
 
---- question 18 fill here ---
+--- We could not set up a GPU VM for our project, hence we did not have much use for VMs in our project. ---
 
 ### Question 19
 
@@ -399,9 +412,9 @@ Here is an overview of the dockerfile:
 >
 > Answer:
 
---- We implemented an alert on gcp to send us an email if the bucket in which the model was stored surpassed a certain storage limit. However, we haven't needed to monitor the model performance, since we did't do our experiments on the cloud but locally. Ideally, we could have implemented more alerts, for example to be aware when our VertexAI pipeline fails.
+--- We implemented an alert on gcp to send us an email if the bucket in which the model was stored surpassed a certain storage limit. However, we haven't needed to monitor the model performance, since we did not do our experiments on the cloud but locally. Ideally, we could have implemented more alerts, for example to be informed when our VertexAI pipeline fails.
 As well, we attempted to use OpenTelemetry to monitor the telemetry data of our FastAPI app, but even though we managed to open the Signoz visualization interface, we were unable to visualize our app on either Windows or MacOS. This would have helped monitor the quality and behavior of our app in the long term.
-Lastly, we wanted to check the robustness of our model to data drifting but we did't do it because of time constraints. The reason for this is that as our data is in the form of text, we had to perform feature extraction and then use EvidentlyAI for data drifting. This could have been a good experiment to see if the model is strong against changes in the way people speak throughout time, since our data consists of movie reviews from RottenTomatoes. ---
+Lastly, we wanted to check the robustness of our model to data drifting but we did not do it because of time constraints. The reason for this is that as our data is in the form of text, we had to perform feature extraction and then use EvidentlyAI for data drifting. This could have been a good experiment to see if the model is strong against changes in the way people speak throughout time, since our data consists of movie reviews from RottenTomatoes. ---
 
 ### Question 24
 
@@ -415,7 +428,7 @@ Lastly, we wanted to check the robustness of our model to data drifting but we d
 >
 > Answer:
 
---- question 24 fill here ---
+--- Group member Alaina used 785.94 kr in our google cloud project, since she was responsible for deploying the model on the cloud. The most expensive service used was Container Registry for storing our deployed docker containers. ---
 
 ## Overall discussion of project
 
@@ -436,7 +449,7 @@ Lastly, we wanted to check the robustness of our model to data drifting but we d
 >
 > Answer:
 
---- Overall architecture of our system in ![this figure](figures/q25-overallarchitecture.png). 
+--- Overall architecture of our system in ![this figure](figures/q25-overallarchitecture.png)
 
 The project started by choosing our framework (Transformers) and dataset (Rotten Tomatoes review dataset). So we started locally with the ML code and optimisation. In this step we have used `Conda` to set up our project environment, PyTorch as a deep learning framework for the training and predicting of our model. At some point we also have used pythons build in profiler cProfile to see the performance of our code, and the library `Pytest` to test our code. As good coding practices for our project, we have used the cookie cutter template to get all our code organised, `mypy` as a type checker to find mistakes while typing our code, and `flake8`, `black` and `isort` for styling our code in a specific way. These last ones were implemented as GitHub actions. As a repository hosting and version controller, we used GitHub, where we stored our code files. However, for our data and model (since they are both large files), we stored them in the cloud. For the experiment logging, we have used both `Hydra`and `Weights&Biases`. The first one as a configuration tool to keep track of the hyper-parameters and the second one to record, organise and share our experiments. ---
 
@@ -452,7 +465,11 @@ The project started by choosing our framework (Transformers) and dataset (Rotten
 >
 > Answer:
 
---- question 26 fill here ---
+--- Various struggles were encountered during the project.
+1. Each team member struggled to get used to using github with others; we overcame it by battling through merging conflicts and becoming more comfortable with the tools.
+2. Docker produced a lot of struggles. Some team members could barely build any images because they took so long on their computers.
+3. Modifying the pre-built google cloud scripts/jobs/commands for our custom PyTorch model. We had to scour many stackoverflow discussions and articles to figure out how to deploy our model in custom training jobs, model deployment, and on cloud run. 
+4. Building yaml files to automatically run various docker commands was extremely difficult, when we needed to add credentials and security and run other python scripts  and dvc pull commands at various points. It was difficult to find the exact answers in google cloud documentation and in stackoverflow. ---
 
 ### Question 27
 

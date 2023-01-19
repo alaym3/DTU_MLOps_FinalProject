@@ -1,0 +1,43 @@
+<h1>fication of Rotten Tomatoes movie reviews</h1>
+<h1><a href="https://streamlit-pqpw5ljsba-ew.a.run.app">Application link!</a></h1>
+<h3>Overall goal of the project</h3>
+<p>The goal of the project is to use natural language processing in order to perform sentiment classification on text, in order to predict whether a certain movie review from <a href="https://www.rottentomatoes.com/">Rotten Tomatoes</a> is positive or negative.</p>
+<h3>What framework are you going to use (Kornia, Transformer, Pytorch-Geometrics)</h3>
+<p>We will use the <a href="https://huggingface.co/">Transformers</a> framework since we are working with Natural Language Processing, specifically for sentiment classification of text.</p>
+<h3>How to you intend to include the framework into your project</h3>
+<p>We will work on sentiment classification of text. The Transformers framework is highly flexible and allows many customizations. Many pretrained models for various types of Natural Language Processing tasks exist. They also provide datasets that can be combined with the pretrained models they offer, which makes the framework perfect for our task.</p>
+<h3>What data are you going to run on (initially, may change)</h3>
+<p>We plan to use datasets provided by <a href="https://huggingface.co/datasets">HuggingFace</a> - we will use the <a href="https://huggingface.co/datasets/rotten_tomatoes">Rotten Tomatoes review dataset</a>. The dataset includes two columns: the text from Rotten Tomatoes reviews for movies, along with a column indicating if the review is positive or negative. <a href="https://www.rottentomatoes.com/">Rotten Tomatoes</a> is a platform where movie reviews are submitted by expert audiences and regular people.</p>
+<p>We may look into other datasets from <a href="https://huggingface.co/datasets">HuggingFace</a> or <a href="https://www.kaggle.com/datasets">Kaggle</a> related to reviews of content or services, as we continue.</p>
+<h3>What deep learning models do you expect to use</h3>
+<p>We expect to start by using the pre-trained transformer <a href="https://huggingface.co/bert-base-uncased">bert-base-uncased</a> since it is the top used model for performing Natural Language Processing tasks on English text, including classification and question-answering. BERT consists of a bidirectional transformer that looks back and forward when analysing the tokens to learn the context of words. Since we want to perform sentiment classification on movie reviews, BERT is a natural model to begin with.</p>
+<h1>How does our app work?</h1>
+<p>Our sentiment classification application uses <a href="https://streamlit.io/">Streamlit</a> and is deployed on Google Cloud via <a href="https://streamlit-pqpw5ljsba-ew.a.run.app">this link</a>. The Streamlit app is containerized and deployed via Cloud Run. Our custom trained huggingface transformers model is downloaded from our Google Cloud Bucket and users are able to type in any text input they want, and view the probability of the phrase being positive and negative. It uses the streamlit.dockerfile in the docker folder.</p>
+<h3>Do you want to run the image locally?</h3>
+<ul>
+<li>clone our repo <code>git clone https://github.com/alaym3/DTU_MLOps_FinalProject.git</code></li>
+<li>have <a href="https://www.docker.com/">Docker</a> installed and running</li>
+<li>run these:</li>
+<li><code>docker build -f docker/streamlit.dockerfile . -t streamlit:latest</code></li>
+<li><code>docker run -p 8080:8080 streamlit:latest</code></li>
+</ul>
+<h3>Do you want to rebuild this all on your own and deploy your own app via Streamlit on Cloud Run??</h3>
+<ul>
+<li>clone our repo <code>git clone https://github.com/alaym3/DTU_MLOps_FinalProject.git</code></li>
+<li>have <a href="https://www.docker.com/">Docker</a> installed and running</li>
+<li>create a project in <a href="https://console.cloud.google.com/">Google Cloud</a></li>
+<li>make sure you have money in your billing account since costs are incurred by the container!! 🤑🤑🤑</li>
+<li>ensure you are <a href="https://cloud.google.com/container-registry/docs/advanced-authentication">authenticated with google cloud auth</a> - check the <code>gcloud auth activate-service-account</code> command specifically. <a href="https://cloud.google.com/sdk/gcloud/reference/auth/activate-service-account">This article</a> may also help.</li>
+<li>add a creds folder and a creds.json inside of it (pertaining to the config.json file auto created by the above steps), connected to your project in Google Cloud</li>
+<li>add folders in root called <code>models/</code>, <code>data/raw/</code>, and `data/processed/'</li>
+<li>run <code>make data</code> to create the datasets</li>
+<li>run <code>make train</code> to train the model and save the model files to the <code>models/</code> folder</li>
+<li>run the streamlit.dockerfile found in the docker folder, tag it, push the image to your project, then run a command to auto deploy via Cloud Run. Example below:</li>
+<li><code>docker build --platform linux/amd64 -f docker/streamlit.dockerfile . -t streamlit:latest</code></li>
+<li><code>docker tag streamlit:latest gcr.io/&lt;project-id&gt;/streamlit</code></li>
+<li><code>docker push gcr.io/&lt;project-id&gt;/streamlit</code></li>
+<li><code>gcloud run deploy streamlit --image gcr.io/&lt;project-id&gt;/streamlit</code></li>
+</ul>
+<p>Note: this was originally built from a Macbook with an M1 chip, which cannot run/deploy docker containers. That is why we added the <code>--platform linux/amd64</code> command.</p>
+<h3>Checklist</h3>
+<p><a href="CHECKLIST.md">View our checklist</a></p>
