@@ -279,7 +279,7 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 3. Once working locally, tag the image
 4. Push the image to our project on GCP
 5. Run a gcloud command depending on what we want to do: such as automatically creating a Cloud Run job, creating a training run on Vertex AI, or deploying the model in the model registry on Vertex AI
-The dockerfile for deploying our app via streamlit on Cloud Run is contained inside [this file](https://github.com/alaym3/DTU_MLOps_FinalProject/blob/main/streamlit.dockerfile.md)
+The dockerfile for deploying our app via streamlit on Cloud Run is contained inside [this file](https://github.com/alaym3/DTU_MLOps_FinalProject/blob/main/docker/streamlit.dockerfile.md)
 Here is an overview of the dockerfile:
 - use python 3.9-slim
 - expose port 8080 to ensure that the streamlit web app works appropriately with Cloud Run
@@ -326,7 +326,7 @@ Here is an overview of the dockerfile:
 >
 > Answer:
 
---- We used the following services: Storage, Container Registry, Run and Monitoring. Cloud Storage is used for storage of the data that we are using (the rotten tomatoes dataset). Container Registry has been used to store and manage Docker images. Cloud Run has been used to run our containers and deploy our application. Lastly Cloud Monitoring was used in our project to create alerts. We created one alert that notifies us when the the storage data in the model bucket surpasses a certain limit. ---
+--- We used the following services: Storage, Container Registry, Run and Monitoring. Cloud Storage is used for storage of the data that we are using (the rotten tomatoes dataset). Container Registry has been used to store and manage Docker images. Cloud Run has been used to run our containers and deploy our application. Lastly, Cloud Monitoring was used in our project to create alerts. We created one alert that notifies us when the the storage data in the model bucket surpasses a certain limit. ---
 
 ### Question 18
 
@@ -432,11 +432,13 @@ Lastly, we wanted to check the robustness of our model to data drifting but we d
 > Example:
 >
 > *The starting point of the diagram is our local setup, where we integrated ... and ... and ... into our code.*
-> *Whenever we commit code and puch to github, it auto triggers ... and ... . From there the diagram shows ...*
+> *Whenever we commit code and push to github, it auto triggers ... and ... . From there the diagram shows ...*
 >
 > Answer:
 
---- Overall architecture of our system in ![this figure](figures/q25-overallarchitecture.png). ---
+--- Overall architecture of our system in ![this figure](figures/q25-overallarchitecture.png). 
+
+The project started by choosing our framework (Transformers) and dataset (Rotten Tomatoes review dataset). So we started locally with the ML code and optimisation. In this step we have used `Conda` to set up our project environment, PyTorch as a deep learning framework for the training and predicting of our model. At some point we also have used pythons build in profiler cProfile to see the performance of our code, and the library `Pytest` to test our code. As good coding practices for our project, we have used the cookie cutter template to get all our code organised, `mypy` as a type checker to find mistakes while typing our code, and `flake8`, `black` and `isort` for styling our code in a specific way. These last ones were implemented as GitHub actions. As a repository hosting and version controller, we used GitHub, where we stored our code files. However, for our data and model (since they are both large files), we stored them in the cloud. For the experiment logging, we have used both `Hydra`and `Weights&Biases`. The first one as a configuration tool to keep track of the hyper-parameters and the second one to record, organise and share our experiments. ---
 
 ### Question 26
 
