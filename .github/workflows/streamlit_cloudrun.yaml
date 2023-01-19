@@ -43,7 +43,11 @@ jobs:
       run: gcloud auth configure-docker
 
     - name: update IAM policy
-      run: gcloud beta run services add-iam-policy-binding --region=europe-west1 --member=allUsers --role=roles/run.invoker streamlit
+      run: |-
+        gcloud beta run services add-iam-policy-binding \
+          --region=europe-west1 \
+          --member=allUsers \
+          --role=roles/run.invoker streamlit
 
     - name: Build and Push Container
       run: |-
