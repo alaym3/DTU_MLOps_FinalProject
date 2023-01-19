@@ -1,5 +1,6 @@
 import cProfile
 import os
+from posixpath import join
 import pstats
 from pstats import SortKey
 
@@ -21,7 +22,8 @@ wandb.init(
 
 @hydra.main(config_path="../../config", config_name="config_default.yaml")
 def main(cfg):
-    output_dir = os.path.join("models/", cfg.train.experiment_name)
+    model_dir = "models"
+    output_dir = os.path.join(model_dir, cfg.train.experiment_name)#.replace("/","\\")  #("models/")#join("models/", cfg.train.experiment_name)
     print(output_dir)
     # Load train and validation sets
     dataset_path = os.path.join(hydra.utils.get_original_cwd(), "data/processed/")
@@ -69,9 +71,7 @@ def main(cfg):
 
     training_args = TrainingArguments(
         report_to="wandb",  # enable logging to W&B
-        output_dir=os.path.join(
-            "models/", cfg.train.experiment_name
-        ),  # set output directory
+        output_dir=os.path.join(model_dir, cfg.train.experiment_name),  # set output directory
         overwrite_output_dir=True,
         evaluation_strategy="steps",  # check evaluation metrics on a given # of steps
         learning_rate=cfg.train.lr,  # we can customize learning rate
@@ -102,7 +102,7 @@ def main(cfg):
     trainer.evaluate()
 
     # Save the model into models/
-    trainer.save_model(os.path.join("models/", cfg.train.experiment_name))
+    trainer.save_model(os.path.join(model_dir, cfg.train.experiment_name))
 
 
 if __name__ == "__main__":
