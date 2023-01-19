@@ -11,6 +11,7 @@ st.markdown(
     Try it out on your own!"
 )
 
+
 # @st.cache
 def load_model():
     # Load model and tokenizer
