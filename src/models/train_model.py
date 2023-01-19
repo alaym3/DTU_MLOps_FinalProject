@@ -1,7 +1,6 @@
 import cProfile
 import os
 import pstats
-from pstats import SortKey
 
 import hydra
 import numpy as np

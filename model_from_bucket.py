@@ -1,12 +1,10 @@
 import os
-from google.cloud import storage
-from google.cloud import language
+
+from google.cloud import language, storage
 from google.oauth2 import service_account
 
 credentials = service_account.Credentials.from_service_account_file("creds/creds.json")
 client = language.LanguageServiceClient(credentials=credentials)
-
-
 
 
 # function to list items in a bucket
