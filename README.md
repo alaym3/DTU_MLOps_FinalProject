@@ -24,16 +24,19 @@ We expect to start by using the pre-trained transformer [bert-base-uncased](http
 Our sentiment classification application uses [Streamlit](https://streamlit.io/) and is deployed on Google Cloud via [this link](https://streamlit-pqpw5ljsba-ew.a.run.app). The Streamlit app is containerized and deployed via Cloud Run. Our custom trained huggingface transformers model is downloaded from our Google Cloud Bucket and users are able to type in any text input they want, and view the probability of the phrase being positive and negative. It uses the streamlit.dockerfile in the docker folder.
 
 ### Do you want to run the image locally?
-- clone our repo
+- clone our repo `git clone https://github.com/alaym3/DTU_MLOps_FinalProject.git`
+- have [Docker](https://www.docker.com/) installed and running
 - run these:
    - `docker build -f docker/streamlit.dockerfile . -t streamlit:latest`
    - `docker run -p 8080:8080 streamlit:latest`
 
 ### Do you want to deploy this app via Streamlit on Cloud Run??
-- clone our repo
-- create a project in Google Cloud
-- make sure you have money in your billing account since costs are incurred by the container
-- add a creds folder and a creds.json inside of it, pertaining to your google cloud authentication credentials created from your project.
+- clone our repo `git clone https://github.com/alaym3/DTU_MLOps_FinalProject.git`
+- have [Docker](https://www.docker.com/) installed and running
+- create a project in [Google Cloud](https://console.cloud.google.com/)
+- make sure you have money in your billing account since costs are incurred by the container!! 🤑🤑🤑
+- ensure you are [authenticated with google cloud auth](https://cloud.google.com/sdk/gcloud/reference/auth/activate-service-account)
+- add a creds folder and a creds.json inside of it (pertaining to the config.json file auto created by the above steps), connected to your project in Google Cloud
 - run the streamlit.dockerfile found in the docker folder, tag it, push the image to your project, then run a command to auto deploy via Cloud Run. Example below:
    - `docker build --platform linux/amd64 -f docker/streamlit.dockerfile . -t streamlit:latest`
    - `docker tag streamlit:latest gcr.io/<project-id>/streamlit`
