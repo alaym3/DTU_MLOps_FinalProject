@@ -8,7 +8,7 @@ RUN apt update && \
 
 COPY .streamlit/ .streamlit/
 COPY models/ models/
-COPY app/ app/
+COPY streamlit/ streamlit/
 COPY requirements.txt requirements.txt
 COPY model_from_bucket.py model_from_bucket.py
 COPY creds/ creds/
@@ -21,4 +21,4 @@ RUN pip install google-cloud-storage
 RUN pip install -r requirements.txt
 RUN python model_from_bucket.py
 
-ENTRYPOINT ["streamlit", "run", "app/app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "streamlit/app.py", "--server.port=8080", "--server.address=0.0.0.0"]
