@@ -10,7 +10,10 @@ RUN apt update && \
 COPY requirements.txt requirements.txt
 COPY setup.py setup.py
 COPY src/ src/
-COPY data/ data/
+COPY .dvc/config .dvc/config
+COPY config/ config/
+COPY docker_run_training.sh docker_run_training.sh
+
 # COPY models/ models/
 # COPY reports/ reports/
 
@@ -22,4 +25,4 @@ RUN pip install -r requirements.txt --no-cache-dir
 # RUN make data
 
 # set training to be the entry point
-ENTRYPOINT ["python", "-u", "src/models/train_model.py"]
+ENTRYPOINT ["./docker_run_training.sh"]

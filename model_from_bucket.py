@@ -1,6 +1,12 @@
 import os
-
 from google.cloud import storage
+from google.cloud import language
+from google.oauth2 import service_account
+
+credentials = service_account.Credentials.from_service_account_file("creds/creds.json")
+client = language.LanguageServiceClient(credentials=credentials)
+
+
 
 
 # function to list items in a bucket
@@ -8,7 +14,7 @@ def list_blobs(bucket_name):
     """Lists all the blobs in the bucket."""
     # bucket_name = "your-bucket-name"
 
-    storage_client = storage.Client()
+    storage_client = storage.Client(credentials=credentials)
 
     # Note: Client.list_blobs requires at least package version 1.17.0.
     blobs = storage_client.list_blobs(bucket_name)
@@ -37,7 +43,7 @@ def download_blob(bucket_name, source_blob_name, destination_file_name):
     # The path to which the file should be downloaded
     # destination_file_name = "local/path/to/file"
 
-    storage_client = storage.Client()
+    storage_client = storage.Client(credentials=credentials)
 
     bucket = storage_client.bucket(bucket_name)
 
