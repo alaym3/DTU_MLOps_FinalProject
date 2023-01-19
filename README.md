@@ -52,6 +52,7 @@ Note: this was originally built from a Macbook with an M1 chip, which cannot run
 ### Checklist
 [View our checklist](CHECKLIST.md)
 
-
+### WandB.ai report
+[Check out our training report](https://wandb.ai/dtu_ml_ops/rotten_tomatoes/reports/Evaluation-of-model-training--VmlldzozMzczMDU5)
 
 
