@@ -219,13 +219,13 @@ Answer length: 50-100 words.
 We decided that an argument parser was not needed if we implemented Hydra. Therefore, we created a model_config.yaml file that allowed us to change the chosen hyperparameters of the model training. We were interested in testing different kinds of models (bert-base-uncased and distilbert-base-uncased) and different batch sizes, learning rates, weight decays and training epochs.
 Inside the model script (train_model_hydra.py), we created a function in which we passed the hyperparameters in this way:
 
-@hydra.main(config_path="config", config_name="model_config.yaml")
-def main(cfg):
-model_name = cfg.model
-model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
+`@hydra.main(config_path="config", config_name="model_config.yaml")`
+`def main(cfg):`
+`model_name = cfg.model`
+`model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)`
 
 To run the model with non-default hyperparameters we would run:
-python train_model_hydra.py model="bert-base-uncased" ---
+`python train_model_hydra.py model="bert-base-uncased"` ---
 
 ### Question 13
 
@@ -467,4 +467,4 @@ Lastly, we wanted to check the robustness of our model to data drifting but we d
 >
 > Answer:
 
---- question 27 fill here ---
+--- We all contributed actively in the project and divided the tasks. Alaina was in charge of creating the repository, creating the cookiecutter structure and setting the coding practices. She also did some unittests for the data, created and built the docker images and deployed the app on Streamlit. As well, together with Siddhi, she worked on deploying our model in the cloud. Siddhi was responsible for loading the data and doing all the data processing, executing the training experiments and logging them in W&B and dealt with the version control and storage of our data in gcp buckets. Alejandra and Carolina wrote the training script, deployed the app locally with FastAPI and evaluated the feasibility of minimizing boilerplate, checking data drifting, doing quantization and monitoring the FastAPI app with OpenTelemetry. Alejandra was also in charge of doing the predict_model script, code typing and commenting and profiling. Lastly, Carolina worked on incorporating Hydra, created unit tests for the model output and checked the coverage of the tests, included distributed data loading and added alerts on gcp. She also implemented GitHub actions with Alaina. ---
