@@ -1,0 +1,16 @@
+steps:
+  - uses: actions/checkout@v3
+  - uses: iterative/setup-dvc@v1
+  - name: Get data
+    run: dvc pull
+    GCP: ${{ secrets.GCP }}
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '--platform linux/amd64','-f', 'docker/streamlit.dockerfile', '.', '-t',  'streamlit:latest']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'streamlit:latest', 'gcr.io/final-project-374512/streamlit:latest']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/final-project-374512/streamlit:latest']
+  - name: 'cloud run'
+    run: gcloud run deploy streamlit --image gcr.io/final-project-374512/streamlit
+timeout: 7200s
+
