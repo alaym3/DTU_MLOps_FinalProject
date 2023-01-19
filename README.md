@@ -24,6 +24,7 @@ We expect to start by using the pre-trained transformer [bert-base-uncased](http
 Our sentiment classification application uses [Streamlit](https://streamlit.io/) and is deployed on Google Cloud via [this link](https://streamlit-pqpw5ljsba-ew.a.run.app). The Streamlit app is containerized and deployed via Cloud Run. Our custom trained huggingface transformers model is downloaded from our Google Cloud Bucket and users are able to type in any text input they want, and view the probability of the phrase being positive and negative. It uses the streamlit.dockerfile in the docker folder.
 
 ### Do you want to run the image locally?
+- clone our repo
 - run these:
    - `docker build -f docker/streamlit.dockerfile . -t streamlit:latest`
    - `docker run -p 8080:8080 streamlit:latest`
