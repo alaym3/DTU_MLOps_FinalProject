@@ -45,9 +45,9 @@ st.markdown(f"**Probability of the phrase being negative: {neg_prediction}%**")
 st.markdown(f"**Probability of the phrase being positive: {pos_prediction}%**")
 st.markdown("#### About the model:")
 st.markdown(
-    "- We started with the pre-trained transformer [bert-base-uncased](https://huggingface.co/bert-base-uncased) since it is the top used model \
-    for performing Natural Language Processing tasks on English text, including classification and \
-        question-answering. BERT consists of a bidirectional transformer that looks back and forward when \
+    "- We started with the pre-trained transformer [distilBERT-base-uncased](https://huggingface.co/distilbert-base-uncased) since it is a small, fast, \
+    and accurate method for performing Natural Language Processing tasks on unacased English text, including classification and \
+        question-answering. distilBERT consists of a bidirectional transformer that looks back and forward when \
             analysing the tokens to learn the context of words."
 )
 st.markdown("#### About the training:")
