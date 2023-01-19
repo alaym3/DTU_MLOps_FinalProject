@@ -1,3 +1,3 @@
 [flake8]
 max-line-length = 100
-ignore = E501, C901 # E501 line too long, C901 too complex
+ignore = E501, C901 
