@@ -107,12 +107,12 @@ if __name__ == "__main__":
     main()
 
     # Profiling: creates profile.dat, profile_time.txt and profile_calls.txt with profiling info
-    cProfile.run("main()", "profile.dat")
+    cProfile.run("main()", "profiling/profile.dat")
 
-    with open("profile_time.txt", "w") as f:
+    with open("profiling/profile_time.txt", "w") as f:
         p = pstats.Stats("profile.dat", stream=f)
         p.sort_stats("time").print_stats()
 
-    with open("profile_calls.txt", "w") as f:
+    with open("profiling/profile_calls.txt", "w") as f:
         p = pstats.Stats("profile.dat", stream=f)
         p.sort_stats("calls").print_stats()
