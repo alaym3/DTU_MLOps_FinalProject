@@ -177,7 +177,7 @@ In any case, not all the parts of the source code were checked, as there are man
 >
 > Answer:
 
---- question 10 fill here ---
+--- We utilized dvc in order to manage the raw and processed data for training, testing, and validation, as well as for the files that comprise our two different models. The files are located in buckets within our project on Google Cloud. Since our datasets were pre-built from huggingface and we did not add or modify it afterwards, we did not need to implement more than one version of data control for the data files. In the future we could use dvc to save different checkpoints of the model files, if we end up changing any parameters in the model after retraining. ---
 
 ### Question 11
 
@@ -193,7 +193,9 @@ In any case, not all the parts of the source code were checked, as there are man
 >
 > Answer:
 
---- question 11 fill here ---
+--- We mainly created unit tests for our data and models in 3 separate files as explained before, with a total coverage of 98%. Besides that, we also implemented GitHub actions to implement our unittests on 3 operating systems (Ubuntu, MacOS, Windows), on the 3.8 Python version, with caching and every time there was a push or a pull from the branches 'main' and 'alaina'. This action can be seen in the following link: https://github.com/alaym3/DTU_MLOps_FinalProject/actions/workflows/tests.yml
+Moreover, we implemented branch protection rules for the 'main' branch so that we would not accept a pull request without passing tests and having peer-review. We established the need to have somebody else accept a PR, pass all tests in all workflows and resolve all conversations, which was very useful to not merge anything accidentally.
+Lastly, we introduced linting so as to maintain good practices throughout the project. We did this for isort, to keep the packages organized; for flake8, to find the points where the code wasn't compling with the coding practices of pep8 and for black, to automatically format it, fixing the issues found. We also set it up so that it run every time there was a push or a pull from the aforementioned branches. ---
 
 ## Running code and tracking experiments
 
@@ -271,7 +273,20 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 >
 > Answer:
 
---- question 15 fill here ---
+--- We built various images during our project. We built them for creating the dataset, training the model, predicting the model, and for deploying the model within a streamlit app. Our general process for building the images went as such:
+1. Try building and running the image locally via the terminal
+2. Run into errors, research them, and fix them
+3. Once working locally, tag the image
+4. Push the image to our project on GCP
+5. Run a gcloud command depending on what we want to do: such as automatically creating a Cloud Run job, creating a training run on Vertex AI, or deploying the model in the model registry on Vertex AI
+The dockerfile for deploying our app via streamlit on Cloud Run is contained inside [this file](https://github.com/alaym3/DTU_MLOps_FinalProject/blob/main/streamlit.dockerfile.md)
+Here is an overview of the dockerfile:
+- use python 3.9-slim
+- expose port 8080 to ensure that the streamlit web app works appropriately with Cloud Run
+- copy all the necessary files from the repo
+- pip install some google cloud modules that were erroring in docker build
+- run a script `model_from_bucket.py` that takes in the local user’s gcloud credentials, accesses our bucket where we store our model files, and resaves them locally into a folder. This is necessary because our huggingface model requires loading all the model files from a local directory, and it is not possible to do that via a bucket.
+- finally the entrypoint is to `streamlit run` our app python script on port 8080. ---
 
 ### Question 16
 
@@ -286,7 +301,15 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 >
 > Answer:
 
---- question 16 fill here ---
+---  Various debugging methods were used, depending on the problem.
+1. Docker
+- many many errors during docker build occurred. the first debugging step is always to just google the error and check stackoverflow for hints on what could be wrong. One team member has a Macbook with an M1 chip, which apparently is not able to successfully build and push images - so when running docker build, it has to be run on a linux platform instead.
+2. Model files
+- our huggingface transformers model must be loaded by loading all the appropriate files from a directory. The directory must be local. Therefore, it is impossible to use the standard `from_pretrained` command in order to load our model from our GCP bucket. We needed to write a python script that could authenticate into google and download the files from a bucket locally.
+3. Authentication
+- adding authentication into google inside of a docker container took a while to figure out. we of course started with google documentation but stack overflow helped us reach the right solution.
+4. Uploading our model/training/other activities on GCP
+- GCP has a lot of documentation and prebuilt steps for how to load models if they come in a simple file (such as .pkl) and specific frameworks. Since our model files were from PyTorch and required several files from a directory, all of the nice and prebuilt options for training models, deploying models, etc. did not work for us. We needed to research and find articles on how people have managed to implement custom jobs with these types of models. ---
 
 ## Working in the cloud
 
@@ -303,7 +326,7 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 >
 > Answer:
 
---- question 17 fill here ---
+--- We used the following services: Storage, Container Registry, Run and Monitoring. Cloud Storage is used for storage of the data that we are using (the rotten tomatoes dataset). Container Registry has been used to store and manage Docker images. Cloud Run has been used to run our containers and deploy our application. Lastly Cloud Monitoring was used in our project to create alerts. We created one alert that notifies us when the the storage data in the model bucket surpasses a certain limit. ---
 
 ### Question 18
 
@@ -361,7 +384,7 @@ As well, the entire reproducibility of our experiments is not guaranteed if we d
 >
 > Answer:
 
---- question 22 fill here ---
+--- We deployed our model both locally and in the cloud by different methods. Two of us deployed the model locally with the tool FastAPI by creating an API for the user to interact with our application. The other deployment of our app has been through the app framework Streamlit. We built a docker image for the app and pushed the image to our container registry. We then enabled the service in Cloud Run. You can access the service with the following url: https://streamlit-pqpw5ljsba-ew.a.run.app/ ---
 
 ### Question 23
 
