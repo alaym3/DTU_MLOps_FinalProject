@@ -1,8 +1,6 @@
 import cProfile
 import os
-from posixpath import join
 import pstats
-from pstats import SortKey
 
 import hydra
 import numpy as np
@@ -23,7 +21,7 @@ wandb.init(
 @hydra.main(config_path="../../config", config_name="config_default.yaml")
 def main(cfg):
     model_dir = "models"
-    output_dir = os.path.join(model_dir, cfg.train.experiment_name)#.replace("/","\\")  #("models/")#join("models/", cfg.train.experiment_name)
+    output_dir = os.path.join(model_dir, cfg.train.experiment_name)  # .replace("/","\\")  #("models/")#join("models/", cfg.train.experiment_name)
     print(output_dir)
     # Load train and validation sets
     dataset_path = os.path.join(hydra.utils.get_original_cwd(), "data/processed/")

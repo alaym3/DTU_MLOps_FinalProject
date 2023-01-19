@@ -19,7 +19,7 @@ def root():
 
 def predict_class(data):
     # Load model and tokenizer
-    model = AutoModelForSequenceClassification.from_pretrained("models")
+    model = AutoModelForSequenceClassification.from_pretrained("../models")
     tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
 
     # Prediction for a new phrase

@@ -41,29 +41,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # - uses: actions/checkout@v3
-    # - uses: iterative/setup-dvc@v1
-    # - name: Get data
-    #   run: dvc pull
-    #   env:
-    #     GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+    - uses: actions/checkout@v3
+    - uses: iterative/setup-dvc@v1
+    - name: Get data
+      run: dvc pull
+      env:
+      GCP: ${{ secrets.GCP }}
 
-    # - name: Test with pytest
-    #   run: |
-    #     pip install pytest
-    #     pytest -v
-
-    - name: Library sorting with isort
+    - name: Test with pytest
       run: |
-        pip install isort
-        isort .
-
-    # - name: Update formatting with black
-    #   run: |
-    #     pip install black
-    #     black .
-
-    # - name: pep8 compliance with flake8
-    #   run: |
-    #     pip install flake8
-    #     flake8 . --config .flake8
+        pip install pytest
+        pytest -v
