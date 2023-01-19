@@ -34,6 +34,11 @@ jobs:
     - name: Pull data
       run: |
         dvc pull
+    
+    # - name: download creds file
+    #   run: |
+    #     python 
+    #     os.environ['credentials_json']
 
 
     # Setup gcloud CLI
