@@ -13,3 +13,14 @@ setuptools==45.2.0
 torch==1.13.1
 torchvision==0.14.1
 transformers==4.25.1
+
+# from streamlit repo
+google-cloud
+google-cloud-storage
+google-cloud-language
+# numpy==1.22.3
+pandas==1.4.3
+# setuptools==45.2.0
+streamlit==1.17.0
+# torch==1.13.1
+# transformers==4.25.1
