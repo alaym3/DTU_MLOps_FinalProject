@@ -48,6 +48,7 @@ jobs:
           --region=europe-west1 \
           --member=allUsers \
           --role=roles/run.invoker streamlit
+          --quiet
 
     - name: Build and Push Container
       run: |-
