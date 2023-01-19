@@ -1,0 +1,47 @@
+steps:
+
+on:
+  push:
+    branches: [ main ]
+
+name: Build and Deploy to Cloud Run
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+
+    # Alternative option - authentication via credentials json
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '${{ secrets.GCP}}'
+
+    - name: Pull data
+      run: |
+        dvc pull
+
+    # Setup gcloud CLI
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Authorize Docker push
+      run: gcloud auth configure-docker
+
+    - name: Build and Push Container
+      run: |-
+        docker build --platform linux/amd64 -f streamlit.dockerfile . -t streamlit:latest
+        docker tag streamlit:latest gcr.io/final-project-374512/streamlit
+        docker push gcr.io/final-project-374512/streamlit   
+    - name: Deploy to Cloud Run
+      run: |-
+        gcloud run deploy streamlit --image gcr.io/final-project-374512/streamlit
