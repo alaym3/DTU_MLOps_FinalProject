@@ -32,8 +32,8 @@ predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
 predictions = predictions.cpu().detach().numpy()
 
 # store the positive and negative predictions
-neg_prediction = predictions[0][0]*100
-pos_prediction = predictions[0][1]*100
+neg_prediction = "{:.2f}".format(predictions[0][0] * 100)
+pos_prediction = "{:.2f}".format(predictions[0][1] * 100)
 
 # print results
 st.markdown(f'**Probability of the phrase being negative: {neg_prediction}%**')
