@@ -9,6 +9,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/final-project-374512/streamlit:latest']
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['gcloud', 'run', 'deploy', 'streamlit', '--image gcr.io/final-project-374512/streamlit']
+    args: ['run', 'deploy', 'streamlit', '--image gcr.io/final-project-374512/streamlit']
 timeout: 7200s
 
