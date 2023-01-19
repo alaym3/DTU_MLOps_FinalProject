@@ -44,12 +44,11 @@ jobs:
 
     - name: update IAM policy
       run: |-
-        gcloud beta run services add-iam-policy-binding \
+        gcloud --quiet beta run services add-iam-policy-binding \
           --region=europe-west1 \
           --member=allUsers \
-          --role=roles/run.invoker streamlit \
-          --quiet
-
+          --role=roles/run.invoker streamlit 
+          
     - name: Build and Push Container
       run: |-
         docker build --platform linux/amd64 -f docker/streamlit_cloudrun.dockerfile . -t streamlit:latest
