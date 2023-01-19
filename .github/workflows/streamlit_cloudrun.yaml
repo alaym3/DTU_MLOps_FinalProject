@@ -49,4 +49,8 @@ jobs:
         docker push gcr.io/final-project-374512/streamlit   
     - name: Deploy to Cloud Run
       run: |-
-        gcloud run deploy streamlit --image gcr.io/final-project-374512/streamlit
+        gcloud run deploy streamlit \
+          --image gcr.io/final-project-374512/streamlit \
+          --region europe-west1 \
+          --platform "managed" \
+          --allow-unauthenticated
