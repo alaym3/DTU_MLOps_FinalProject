@@ -1,5 +1,6 @@
 MLOps project description: sentiment classification of Rotten Tomaties movie reviews
 ==============================
+# [Application link!](https://streamlit-pqpw5ljsba-ew.a.run.app)
 
 ### Overall goal of the project
 The goal of the project is to use natural language processing in order to perform sentiment classification on text, in order to predict whether a certain movie review from [Rotten Tomatoes](https://www.rottentomatoes.com/) is positive or negative.
@@ -19,59 +20,28 @@ We may look into other datasets from [HuggingFace](https://huggingface.co/datase
 We expect to start by using the pre-trained transformer [bert-base-uncased](https://huggingface.co/bert-base-uncased) since it is the top used model for performing Natural Language Processing tasks on English text, including classification and question-answering. BERT consists of a bidirectional transformer that looks back and forward when analysing the tokens to learn the context of words. Since we want to perform sentiment classification on movie reviews, BERT is a natural model to begin with.
 
 
+# How does our app work?
+Our sentiment classification application uses [Streamlit](https://streamlit.io/) and is deployed on Google Cloud via [this link](https://streamlit-pqpw5ljsba-ew.a.run.app). The Streamlit app is containerized and deployed via Cloud Run. Our custom trained huggingface transformers model is downloaded from our Google Cloud Bucket and users are able to type in any text input they want, and view the probability of the phrase being positive and negative. It uses the streamlit.dockerfile in the docker folder.
+
+### Do you want to run the image locally?
+- run `docker build -f docker/streamlit.dockerfile . -t streamlit:latest` then `docker run -p 8080:8080 streamlit:latest`
+
+### Do you want to deploy this app via Streamlit on Cloud Run??
+- clone our repo
+- create a project in Google Cloud
+- make sure you have money in your billing account since costs are incurred by the container
+- add a creds folder and a creds.json inside of it, pertaining to your google cloud authentication credentials created from your project.
+- run the streamlit.dockerfile found in the docker folder, tag it, push the image to your project, then run a command to auto deploy via Cloud Run. Example below:
+   - `docker build --platform linux/amd64 -f docker/streamlit.dockerfile . -t streamlit:latest`
+   - `docker tag streamlit:latest gcr.io/<project-id>/streamlit`
+   - `docker push gcr.io/<project-id>/streamlit`
+   - `gcloud run deploy streamlit --image gcr.io/<project-id>/streamlit`
+
+
+
 ### Checklist
 [View our checklist](CHECKLIST.md)
 
 
-Project Organization
-------------
-
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 
 
---------
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
