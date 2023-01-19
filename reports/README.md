@@ -436,7 +436,7 @@ Lastly, we wanted to check the robustness of our model to data drifting but we d
 >
 > Answer:
 
---- question 25 fill here ---
+--- Overall architecture of our system in ![this figure](https://github.com/alaym3/DTU_MLOps_FinalProject/reports/figures/q25-overallarchitecture.png). ---
 
 ### Question 26
 
