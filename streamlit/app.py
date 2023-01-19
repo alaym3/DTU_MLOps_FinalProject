@@ -7,10 +7,9 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 st.set_page_config(layout="wide", page_title="text-classification")
 st.title("Sentiment classification app")
 st.markdown(
-    "### This app allows you to type in a phrase and see how much the phrase is classified to be positive or negative. \
+    "### This app allows you to type in a phrase and see how much the phrase is predicted to be positive or negative. \
     Try it out on your own!"
 )
-
 
 # @st.cache
 def load_model():
