@@ -3,10 +3,10 @@ import logging
 import os
 from pathlib import Path
 
+import hydra
 from datasets import load_dataset
 from dotenv import find_dotenv, load_dotenv
 from transformers import AutoTokenizer
-import hydra
 
 
 def get_tokenizer():

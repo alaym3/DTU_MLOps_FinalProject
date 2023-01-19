@@ -2,7 +2,6 @@ import cProfile
 import os
 from posixpath import join
 import pstats
-from pstats import SortKey
 
 import hydra
 import numpy as np

@@ -41,22 +41,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # - uses: actions/checkout@v3
-    # - uses: iterative/setup-dvc@v1
-    # - name: Get data
-    #   run: dvc pull
-    #   env:
-    #     GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-
-    # - name: Test with pytest
-    #   run: |
-    #     pip install pytest
-    #     pytest -v
-
-    - name: Library sorting with isort
+    - name: Test with pytest
       run: |
-        pip install isort
-        isort .
+        pip install pytest
+        pytest -v
+
+    # - name: Library sorting with isort
+    #   run: |
+    #     pip install isort
+    #     isort .
 
     # - name: Update formatting with black
     #   run: |
