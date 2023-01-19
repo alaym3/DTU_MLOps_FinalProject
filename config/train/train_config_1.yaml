@@ -1,4 +1,4 @@
-experiment_name: "exp_1/"
+experiment_name: "exp_1"
 model: "distilbert-base-uncased"
 lr: 2e-5
 epochs: 1
