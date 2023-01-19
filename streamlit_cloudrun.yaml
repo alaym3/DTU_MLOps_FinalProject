@@ -1,7 +1,7 @@
 steps:
   - name: Get data
     run: dvc pull
-    GCP: ${{ secrets.GCP }}
+    credentials_json: ${{ secrets.GCP }}
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '--platform linux/amd64','-f', 'docker/streamlit.dockerfile', '.', '-t',  'streamlit:latest']
   - name: 'gcr.io/cloud-builders/docker'
