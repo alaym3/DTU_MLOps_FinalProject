@@ -40,6 +40,7 @@ Our sentiment classification application uses [Streamlit](https://streamlit.io/)
    - `docker push gcr.io/<project-id>/streamlit`
    - `gcloud run deploy streamlit --image gcr.io/<project-id>/streamlit`
 
+Note: this was originally built from a Macbook with an M1 chip, which cannot run/deploy docker containers. That is why we added the `--platform linux/amd64` command.
 
 
 ### Checklist
