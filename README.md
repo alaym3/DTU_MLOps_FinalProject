@@ -1,4 +1,4 @@
-MLOps project description: sentiment classification of Rotten Tomaties movie reviews
+MLOps project description: sentiment classification of Rotten Tomatoes movie reviews
 ==============================
 # [Application link!](https://streamlit-pqpw5ljsba-ew.a.run.app)
 
