@@ -18,6 +18,12 @@ jobs:
       uses: actions/checkout@v3
 
 
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install dvc 'dvc[gs]'
+
     # Alternative option - authentication via credentials json
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
