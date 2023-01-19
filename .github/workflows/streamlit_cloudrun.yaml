@@ -42,6 +42,9 @@ jobs:
     - name: Authorize Docker push
       run: gcloud auth configure-docker
 
+    - name: update IAM policy
+      run: gcloud beta run services add-iam-policy-binding --region=europe-west1 --member=allUsers --role=roles/run.invoker streamlit
+
     - name: Build and Push Container
       run: |-
         docker build --platform linux/amd64 -f docker/streamlit_cloudrun.dockerfile . -t streamlit:latest
