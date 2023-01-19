@@ -80,7 +80,7 @@ def main(cfg):
         eval_steps=cfg.train.eval_steps,  # we will perform evaluation every 1000 steps
         eval_accumulation_steps=cfg.train.eval_accumulation_steps,  # report evaluation results after each step
         load_best_model_at_end=cfg.train.load_best_model_at_end,
-        dataloader_num_workers=8,  # number of workers for distributed data loading
+        # dataloader_num_workers=8,  # number of workers for distributed data loading
         metric_for_best_model="accuracy",
         run_name="my_training_run",  # name of the W&B run
     )
