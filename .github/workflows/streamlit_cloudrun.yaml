@@ -1,0 +1,73 @@
+name: Build and Deploy to Cloud Run
+
+on:
+  push:
+    branches: [ alaina ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install dvc 'dvc[gs]'
+
+    # Alternative option - authentication via credentials json
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '${{ secrets.GCP}}'
+        service_account: 'final-project-374512@appspot.gserviceaccount.com'
+
+    - name: Pull data
+      run: |
+        dvc pull
+    
+    # - name: download creds file
+    #   run: |
+    #     python 
+    #     os.environ['credentials_json']
+
+
+    # Setup gcloud CLI
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Authorize Docker push
+      run: gcloud auth configure-docker
+
+    # - name: update IAM policy
+    #   run: |-
+    #     gcloud --quiet beta run services add-iam-policy-binding \
+    #       --region=europe-west1 \
+    #       --member=allUsers \
+    #       --role=roles/run.invoker streamlit 
+
+    - name: Build and Push Container
+      run: |-
+        docker build --platform linux/amd64 -f docker/streamlitCI_cloudrun.dockerfile . -t streamlitCI:latest
+        docker tag streamlitCI:latest gcr.io/final-project-374512/streamlitCI
+        docker push gcr.io/final-project-374512/streamlitCI   
+    - name: Deploy to Cloud Run
+      run: |-
+        gcloud run deploy streamlitCI \
+          --image gcr.io/final-project-374512/streamlitCI \
+          --region europe-west1 \
+          --platform "managed" \
+          --allow-unauthenticated
+
+
+
+  # final-project-374512@appspot.gserviceaccount.com
