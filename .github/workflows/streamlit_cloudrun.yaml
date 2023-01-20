@@ -57,7 +57,7 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker build --platform linux/amd64 -f docker/streamlitci_cloudrun.dockerfile . -t streamlitci:latest
+        docker build --platform linux/amd64 -f docker/streamlitci.dockerfile . -t streamlitci:latest
         docker tag streamlitci:latest gcr.io/final-project-374512/streamlitci
         docker push gcr.io/final-project-374512/streamlitci   
     - name: Deploy to Cloud Run
