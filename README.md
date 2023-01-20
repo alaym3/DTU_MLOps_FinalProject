@@ -19,6 +19,9 @@ We may look into other datasets from [HuggingFace](https://huggingface.co/datase
 ### What deep learning models do you expect to use
 We expect to start by using the pre-trained transformer [bert-base-uncased](https://huggingface.co/bert-base-uncased) since it is the top used model for performing Natural Language Processing tasks on English text, including classification and question-answering. BERT consists of a bidirectional transformer that looks back and forward when analysing the tokens to learn the context of words. Since we want to perform sentiment classification on movie reviews, BERT is a natural model to begin with.
 
+### Last update on the model we used
+When we were starting to work on our project, we first considered using the pre-trained transformer [bert-base-uncased](https://huggingface.co/bert-base-uncased) as explained previously. However, we finally used [distilbert-base-uncased](https://huggingface.co/distilbert-base-uncased) which is a distilled version of the Bert base model, this means that it has been trained to mimic the behavior of BERT-base-uncased while being smaller and faster. We made this choice because DistilBERT-base-uncased is faster and more memory-efficient, making it more suitable for use on devices with limited resources.
+
 
 # How does our app work?
 Our sentiment classification application uses [Streamlit](https://streamlit.io/) and is deployed on Google Cloud via [this link](https://streamlit-pqpw5ljsba-ew.a.run.app). The Streamlit app is containerized and deployed via Cloud Run. Our custom trained huggingface transformers model is downloaded from our Google Cloud Bucket and users are able to type in any text input they want, and view the probability of the phrase being positive and negative. It uses the streamlit.dockerfile in the docker folder.
