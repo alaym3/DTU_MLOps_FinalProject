@@ -197,7 +197,7 @@ In any case, not all the parts of the source code were checked, as there are man
 > Answer:
 
 --- We mainly created unit tests for our data and models in 3 separate files as explained before. We implemented GitHub actions to implement our unit tests on 3 operating systems (Ubuntu, MacOS, Windows), on the 3.8 Python version with caching. Every time there was a push or a pull from the branches 'main' and 'alaina'. This action can be seen in [tests.yml](https://github.com/alaym3/DTU_MLOps_FinalProject/actions/workflows/tests.yml)
-Lastly, we introduced linting so as to maintain good practices throughout the project. We did this for isort, to keep the packages organized; for flake8, to find the points where the code wasn't compling with the coding practices of pep8 and for black, to automatically format it, fixing the issues found. We also set it up so that it run every time there was a push or a pull from the main branch. ---
+Lastly, we introduced linting so as to maintain good practices throughout the project. We did this for isort, to keep the packages organized; for flake8, to find the points where the code wasn't compling with the coding practices of pep8 and for black, to automatically format it, fixing the issues found. We also set it up so that it run every time there was a push or a pull from the main branch. Finally, we added a github workflow that would automatically build and push the docker image containing out app to GCP and deploy a Cloud Run job to update the app, everytime there was a push to the alaina branch. This solution was worked on shortly before the exam, so it was not implemented in main yet in order to ensure the MVP was working correctly for the exam. ---
 
 ## Running code and tracking experiments
 
